@@ -8,11 +8,16 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
+    "@chakra-ui/next-js": "^2.1.2",
+    "@chakra-ui/react": "^2.5.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-testing-library": "^5.10.2",
+    "framer-motion": "^10.11.2",
     "next": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
