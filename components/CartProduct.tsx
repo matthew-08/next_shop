@@ -42,16 +42,20 @@ function CartProduct({ cartItem }: { cartItem: CartItem }) {
         <Flex align="center">
           <IconButton
             aria-label="button"
+            data-testid="decrement-button"
             onClick={() => handleClick('-')}
             icon={<MinusIcon boxSize={4} />}
           />
           <Flex flexGrow={1} px="2rem">
-            <Text fontSize="2rem">{cartItem.itemQuantity}</Text>
+            <Text fontSize="2rem" data-testid="cart-quantity">
+              {cartItem.itemQuantity}
+            </Text>
           </Flex>
           <IconButton
             aria-label="button"
             onClick={() => handleClick('+')}
             icon={<AddIcon boxSize={4} />}
+            data-testid="increment-button"
           />
         </Flex>
       </VStack>

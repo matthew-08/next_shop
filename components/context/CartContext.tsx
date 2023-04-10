@@ -56,6 +56,8 @@ function CartContext({ children }: { children: ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountFetchData])
   const handleAddToCart = async (item: ShopItem) => {
+    console.log(user)
+    console.log('testing user')
     const itemExists = cart.find((i) => i.itemId === item.itemId)
     if (itemExists) {
       setCart(
@@ -117,7 +119,7 @@ function CartContext({ children }: { children: ReactNode }) {
         })
       )
     }
-    if (user && cart) {
+    if (user?.id && cart) {
       deleteFromCart({
         variables: {
           cartId,
