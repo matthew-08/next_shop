@@ -1,0 +1,15 @@
+query FetchExistingCart($input: String!) {
+  userCart(userId: $input) {
+    id
+    userItems {
+      item {
+        itemId
+        itemDescription
+        itemImage
+        itemName
+        itemPrice
+        itemQuantity
+      }
+    }
+  }
+}

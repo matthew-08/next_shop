@@ -1,0 +1,21 @@
+mutation AddToCart($input: AddToCartInput!) {
+  addToCart(input: $input) {
+    id
+    userItems {
+      item {
+        itemDescription
+        itemId
+        itemImage
+        itemName
+        itemPrice
+        itemQuantity
+      }
+    }
+  }
+}
+
+mutation IncrementItem($input: IncrementCartItemInput!) {
+  incrementCartItem(input: $input) {
+    cartSpecificId
+  }
+}

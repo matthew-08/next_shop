@@ -1,0 +1,15 @@
+mutation Register($UserRegisterInput: UserRegisterInput!) {
+  register(input: $UserRegisterInput) {
+    __typename
+    ... on Error {
+      message
+    }
+    ... on MutationRegisterSuccess {
+      data {
+        email
+        id
+        token
+      }
+    }
+  }
+}

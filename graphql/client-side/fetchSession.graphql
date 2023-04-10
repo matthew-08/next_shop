@@ -1,0 +1,29 @@
+mutation fetchSession($input: SessionCheckInput!) {
+  checkForSession(input: $input) {
+    __typename
+    ... on Error {
+      message
+    }
+    ... on MutationCheckForSessionSuccess {
+      data {
+        email
+        id
+        token
+        cart {
+          id
+          userItems {
+            cartItemQuantity
+            item {
+              itemDescription
+              itemId
+              itemImage
+              itemName
+              itemPrice
+              itemQuantity
+            }
+          }
+        }
+      }
+    }
+  }
+}

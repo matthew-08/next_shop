@@ -1,0 +1,33 @@
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+mutation LogIn($LoginType: LoginType!) {
+  login(input: $LoginType) {
+    __typename
+    ... on MutationLoginSuccess {
+      data {
+        email
+        id
+        token
+        cart {
+          id
+          userItems {
+            item {
+              itemDescription
+              itemId
+              itemImage
+              itemName
+              itemPrice
+              itemQuantity
+            }
+          }
+        }
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
