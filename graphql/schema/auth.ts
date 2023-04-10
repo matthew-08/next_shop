@@ -1,6 +1,6 @@
-import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import prisma from 'prisma/db';
 import builder from '../builder';
-import prisma from '../db';
 import JWTSecretKey from '../utils/envVariables';
 import verifyJWT from '../utils/verifyJWT';
 

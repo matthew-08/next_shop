@@ -1,4 +1,4 @@
-import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import JWTSecretKey from './envVariables';
 
 interface JWTAuthPayload extends JwtPayload {
