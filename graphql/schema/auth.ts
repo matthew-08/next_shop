@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import prisma from 'prisma/db';
+import JWTSecretKey from 'graphql/utils/envVariables';
 import builder from '../builder';
-import JWTSecretKey from '../utils/envVariables';
 import verifyJWT from '../utils/verifyJWT';
 
 const user = builder.prismaObject('User', {
