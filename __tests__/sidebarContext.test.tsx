@@ -1,29 +1,40 @@
 import { UserCartContext } from '@/components/context/CartContext'
 import SidebarContent from '@/components/SidebarContent'
-import { screen, render, fireEvent, waitFor } from '@testing-library/react'
+import {
+  screen,
+  render,
+  fireEvent,
+  waitFor,
+  getAllByTestId,
+  findAllByTestId,
+} from '@testing-library/react'
 import Navbar from '@/components/Navbar'
 import userEvent from '@testing-library/user-event'
+import { ShopItem } from 'graphql/generated/graphql'
 
-const cartMock = [
-  {
-    itemName: 'item',
-    itemDescription: 'a description',
-    itemId: '2',
-    itemImage: 'image',
-    itemPrice: 3,
-    itemQuantity: 4,
-  },
-  {
-    itemName: 'item 2',
-    itemDescription: 'a description',
-    itemId: '3',
-    itemImage: 'image',
-    itemPrice: 3,
-    itemQuantity: 4,
-  },
-]
-
+let cartMock: ShopItem[]
 const emptyCartMock: any[] = []
+
+beforeEach(() => {
+  cartMock = [
+    {
+      itemName: 'item',
+      itemDescription: 'a description',
+      itemId: '2',
+      itemImage: 'image',
+      itemPrice: 3,
+      itemQuantity: 4,
+    },
+    {
+      itemName: 'item 2',
+      itemDescription: 'a description',
+      itemId: '3',
+      itemImage: 'image',
+      itemPrice: 3,
+      itemQuantity: 4,
+    },
+  ]
+})
 const handleRemoveFromCart = jest.fn(() => cartMock[0].itemQuantity--)
 const handleAddToCart = jest.fn(() => cartMock[0].itemQuantity++)
 
@@ -39,6 +50,7 @@ const setup = (options: 'empty' | 'populated') =>
       <SidebarContent />
     </UserCartContext.Provider>
   )
+const { rerender, unmount } = setup('populated')
 
 describe('sidebar content', () => {
   it('should display cart items', () => {
@@ -46,7 +58,7 @@ describe('sidebar content', () => {
     expect(screen.getByText('item')).toBeInTheDocument()
   })
 
-  it('calls the remove from cart function', () => {
+  it('calls the removeFromCart function', () => {
     setup('populated')
     const decrementButton = screen.getAllByRole('button')[0]
     fireEvent.click(decrementButton)
@@ -56,15 +68,18 @@ describe('sidebar content', () => {
   it('decrements quantity upon click of decrement button', async () => {
     setup('populated')
     const decrementButton = screen.getAllByTestId('decrement-button')[0]
-    console.log(decrementButton)
     expect(decrementButton).toBeInTheDocument()
-    const quantityCount = screen.getAllByTestId('cart-quantity')[0]
-    expect(quantityCount).toHaveTextContent('3')
-    await userEvent.click(decrementButton)
+    await userEvent.dblClick(decrementButton)
+    expect(handleRemoveFromCart).toBeCalledTimes(2)
+    expect(cartMock[0].itemQuantity).toEqual(2)
   })
 
-  it('should show the correct quantity upon click of decrement', () => {
+  it('should show the correct price upon click of decrement', async () => {
     setup('populated')
+    const decrementButton = screen.getAllByTestId('decrement-button')[0]
+    await userEvent.dblClick(decrementButton)
+    expect(await screen.findByText('8')).toBeInTheDocument()
+    jest.clearAllMocks()
   })
 
   it('should show cart is empty text if cart is empty', () => {
