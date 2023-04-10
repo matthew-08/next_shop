@@ -12,8 +12,8 @@ import {
 import React, { useContext, useRef } from 'react'
 import { v4 as uuid } from 'uuid'
 import Link from 'next/link'
+import { UserCartContext } from 'context/CartContext'
 import shopcart from '../assets/shopping-cart.svg'
-import { UserCartContext } from './CartContext'
 import Sidebar from './Sidebar'
 
 const navbarLinks = [
