@@ -1,9 +1,9 @@
 import SchemaBuilder from '@pothos/core';
 import PrismaPlugin from '@pothos/plugin-prisma';
 import { DateTimeResolver } from 'graphql-scalars';
-import type PrismaTypes from '@pothos/plugin-prisma/generated';
 import ErrorsPlugin from '@pothos/plugin-errors';
 import prisma from 'prisma/db';
+import type PrismaTypes from 'prisma/pothos-types';
 
 interface User {
   name: string
