@@ -16,7 +16,6 @@ function AccountContext({ children }: { children: ReactNode }) {
     id: null,
     email: null,
   })
-  console.log(user.id)
   const [mutateFunction, { data: accountFetchData, loading, error }] =
     useFetchSessionMutation()
   useEffect(() => {

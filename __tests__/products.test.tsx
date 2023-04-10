@@ -1,8 +1,4 @@
-import { findByText, getByText, render, screen } from '@testing-library/react'
-import Sidebar from '@/components/Sidebar'
-import AccountContext, {
-  AuthContext,
-} from '@/components/context/AccountContext'
+import { render, screen } from '@testing-library/react'
 import mockRouter from 'next-router-mock'
 import { MockedProvider } from '@apollo/client/testing'
 import Navbar from '@/components/Navbar'
@@ -70,5 +66,48 @@ describe('products', () => {
       </MockedProvider>
     )
     expect(await screen.findAllByText('Add to cart')).toHaveLength(2)
+  })
+
+  it('should call the add to cart function on click', async () => {
+    const handleAddToCart = jest.fn()
+    render(
+      <MockedProvider mocks={mocks}>
+        <UserCartContext.Provider
+          value={{
+            handleAddToCart,
+          }}
+        >
+          <Products />
+        </UserCartContext.Provider>
+      </MockedProvider>
+    )
+    const button = (await screen.findAllByText('Add to cart'))[0]
+    await userEvent.click(button)
+
+    expect(handleAddToCart).toHaveBeenCalled()
+  })
+
+  it('should add an item to the cart context', async () => {
+    const cart: string[] = []
+    const handleAddToCart = jest.fn(() => {
+      cart.push('item')
+    })
+
+    render(
+      <MockedProvider mocks={mocks}>
+        <UserCartContext.Provider
+          value={{
+            handleAddToCart,
+            cart,
+          }}
+        >
+          <Products />
+        </UserCartContext.Provider>
+      </MockedProvider>
+    )
+    const button = (await screen.findAllByText('Add to cart'))[0]
+    await userEvent.click(button)
+    expect(handleAddToCart).toHaveBeenCalled()
+    expect(cart).toHaveLength(1)
   })
 })
