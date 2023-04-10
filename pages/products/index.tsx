@@ -12,12 +12,12 @@ function Products() {
   if (loading) {
     products = (
       <Flex m="auto" mt="3rem" role="status">
-        <Audio height="300" width="300" color="#C4F1F9" ariaLabel="status" />
+        <Audio height="300" width="300" color="#C4F1F9" />
       </Flex>
     )
   } else {
     products = data?.allItems.map((item) => (
-      <MemoProductCard key={uuid()} productInfo={item} data-testid="product" />
+      <MemoProductCard key={uuid()} productInfo={item} />
     ))
   }
   return (
