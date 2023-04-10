@@ -1,0 +1,16 @@
+schema: 'http://localhost:3000/api/graphql'
+
+documents: './graphql/client-side/*.graphql'
+ignoreNoDocuments: true
+generates:
+  graphql/generated/graphql.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      withHooks: true
+
+hooks:
+  afterAllFileWrite:
+    - eslint --fix
