@@ -4,16 +4,17 @@ import {
   List,
   ListItem,
   Button,
-  Image,
   useMediaQuery,
   useDisclosure,
   Circle,
+  chakra,
 } from '@chakra-ui/react'
 import React, { useContext, useRef } from 'react'
 import { v4 as uuid } from 'uuid'
 import Link from 'next/link'
-import { UserCartContext } from 'context/CartContext'
-import shopcart from '../assets/shopping-cart.svg'
+import { UserCartContext } from '@/components/context/CartContext'
+import Image from 'next/image'
+import shopcart from '../public/shopping-cart.svg'
 import Sidebar from './Sidebar'
 
 const navbarLinks = [
@@ -31,6 +32,11 @@ const navbarLinks = [
   },
 ]
 
+const CartImage = chakra(Image, {
+  shouldForwardProp: (prop) =>
+    ['height', 'width', 'quality', 'src', 'alt'].includes(prop),
+})
+
 function Navbar() {
   const [isSmallerThan1200] = useMediaQuery('(max-width: 1200px)')
   const [isSmallerThan700] = useMediaQuery('(max-width: 700px)')
@@ -42,7 +48,7 @@ function Navbar() {
       as="nav"
       background="blackAlpha.900"
       width="100%"
-      minH="20%"
+      minH="200px"
       px={{ md: '2rem', lg: '2rem', xl: '10rem', '2xl': '15rem' }}
       py={isSmallerThan1200 ? '1rem' : '0rem'}
       color="cyan.100"
@@ -91,7 +97,8 @@ function Navbar() {
               {cart?.length}
             </Circle>
           )}
-          <Image
+          <CartImage
+            alt="cart"
             src={shopcart}
             borderRadius="full"
             boxSize={isSmallerThan700 ? '55px' : '70px'}

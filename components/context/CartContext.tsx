@@ -13,7 +13,7 @@ import {
   useDeleteFromCartMutation,
   useIncrementItemMutation,
 } from 'graphql/generated/graphql'
-import { CartItem, CartContextType } from '../types/types'
+import { CartItem, CartContextType } from '../../types/types'
 import { AuthContext } from './AccountContext'
 
 export const UserCartContext = createContext<CartContextType>({

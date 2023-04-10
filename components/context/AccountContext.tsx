@@ -3,7 +3,7 @@ import { createContext, ReactNode, useEffect, useState } from 'react'
 import { useFetchSessionMutation } from 'graphql/generated/graphql'
 import type { FetchSessionMutation } from 'graphql/generated/graphql'
 import getToken from 'utils/getToken'
-import { User, AuthContextType } from '../types/types'
+import { User, AuthContextType } from '../../types/types'
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,

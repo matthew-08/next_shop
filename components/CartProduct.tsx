@@ -10,7 +10,7 @@ import {
   Box,
 } from '@chakra-ui/react'
 import React, { useContext } from 'react'
-import { UserCartContext } from 'context/CartContext'
+import { UserCartContext } from '@/components/context/CartContext'
 import { CartItem } from 'types/types'
 
 function CartProduct({ cartItem }: { cartItem: CartItem }) {

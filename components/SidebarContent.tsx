@@ -1,8 +1,8 @@
 import { Heading, VStack, Text, StackDivider } from '@chakra-ui/react'
 import { useContext } from 'react'
 import { v4 as uuid } from 'uuid'
-import { UserCartContext } from 'context/CartContext'
-import { AuthContext } from 'context/AccountContext'
+import { UserCartContext } from '@/components/context/CartContext'
+import { AuthContext } from '@/components/context/AccountContext'
 import CartProduct from './CartProduct'
 
 function SidebarContent() {

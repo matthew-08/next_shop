@@ -12,8 +12,8 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { AuthContext } from 'context/AccountContext'
-import { UserCartContext } from 'context/CartContext'
+import { AuthContext } from '@/components/context/AccountContext'
+import { UserCartContext } from '@/components/context/CartContext'
 import SidebarContent from './SidebarContent'
 
 function Sidebar({
@@ -79,7 +79,7 @@ function Sidebar({
           <SidebarContent />
         </DrawerBody>
 
-        <DrawerFooter alignItems="center">
+        <DrawerFooter alignItems="center" mb="2rem">
           <Flex m="auto" flexDir="column" width="60%" gap="0.5rem">
             {!user && (
               <Text textAlign="center">
@@ -89,8 +89,8 @@ function Sidebar({
             )}
             <Button
               fontSize="1.5rem"
-              padding="1.5rem"
               width="100%"
+              padding="1.5rem"
               variant="outline"
               mr={3}
               onClick={onClose}
