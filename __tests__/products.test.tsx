@@ -23,6 +23,14 @@ describe('products', () => {
       itemPrice: 30,
       itemQuantity: 4,
     },
+    {
+      itemDescription: 'test',
+      itemId: '2',
+      itemImage: 'image',
+      itemName: 'test-item-2',
+      itemPrice: 40,
+      itemQuantity: 4,
+    },
   ]
   const mocks = [
     {
@@ -52,5 +60,15 @@ describe('products', () => {
       </MockedProvider>
     )
     expect(await screen.findByText('test-item')).toBeInTheDocument()
+    expect(await screen.findByText('$30')).toBeInTheDocument()
+  })
+
+  it('should show all products', async () => {
+    render(
+      <MockedProvider mocks={mocks}>
+        <Products />
+      </MockedProvider>
+    )
+    expect(await screen.findAllByText('Add to cart')).toHaveLength(2)
   })
 })
