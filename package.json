@@ -8,6 +8,7 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.11",
     "@chakra-ui/next-js": "^2.1.2",
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
