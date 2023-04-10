@@ -3,7 +3,8 @@
   "extends": [
     "next/core-web-vitals",
     "airbnb",
-    "airbnb-typescript"
+    "airbnb-typescript",
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -12,7 +13,8 @@
   "plugins": ["testing-library", "@typescript-eslint"],
   "rules": {
     "react/react-in-jsx-scope": 0,
-    "react/jsx-props-no-spreading": 0
+    "react/jsx-props-no-spreading": 0,
+    "@typescript-eslint/no-unused-vars": 0
   },
   "overrides": [
     // Only uses Testing Library lint rules in test files
