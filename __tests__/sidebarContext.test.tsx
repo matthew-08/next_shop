@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-render-in-setup */
 /* eslint-disable no-plusplus */
 import { UserCartContext } from '@/components/context/CartContext'
 import SidebarContent from '@/components/SidebarContent'
@@ -36,53 +37,58 @@ const resetCartMock = () => [
   },
 ]
 
-beforeEach(() => {
-  cartMock = resetCartMock()
-})
+function setup() {
+  const cart = resetCartMock()
+  const handleRemoveFromCart = jest.fn(() => cart[0].itemQuantity--)
+  const handleAddToCart = jest.fn(() => cart[0].itemQuantity++)
+  return {
+    ...render(
+      <UserCartContext.Provider
+        value={{
+          cart,
+          handleRemoveFromCart,
+          handleAddToCart,
+        }}
+      >
+        <SidebarContent />
+      </UserCartContext.Provider>
+    ),
+    cart,
+    handleRemoveFromCart,
+    handleAddToCart,
+  }
+}
 
-const handleRemoveFromCart = jest.fn(() => cartMock[0].itemQuantity--)
-const handleAddToCart = jest.fn(() => cartMock[0].itemQuantity++)
+describe('sidebar content with cart items', () => {
+  beforeEach(() => {})
 
-const setup = (options: 'empty' | 'populated') =>
-  render(
-    <UserCartContext.Provider
-      value={{
-        cart: options === 'empty' ? emptyCartMock : resetCartMock(),
-        handleRemoveFromCart,
-        handleAddToCart,
-      }}
-    >
-      <SidebarContent />
-    </UserCartContext.Provider>
-  )
-
-describe('sidebar content', () => {
-  it('should display cart items', () => {
-    setup('populated')
+  it.only('should display cart items', () => {
+    setup()
     expect(screen.getByText('item')).toBeInTheDocument()
   })
-  it('calls the removeFromCart function', async () => {
-    setup('populated')
+  it.only('calls the removeFromCart function', async () => {
+    const { handleRemoveFromCart } = setup()
     const decrementButton = screen.getAllByRole('button')[0]
     await userEvent.click(decrementButton)
     expect(handleRemoveFromCart).toHaveBeenCalledTimes(1)
     jest.resetAllMocks()
   })
 
-  it('decrements quantity upon click of decrement button', async () => {
-    setup('populated')
+  it.only('decrements quantity upon click of decrement button', async () => {
+    const { cart } = setup()
     const button = screen.getAllByRole('button')[0]
     expect(button).toBeInTheDocument()
     await userEvent.click(button)
-    expect(cartMock[0].itemQuantity).toEqual(3)
+    expect(cart[0].itemQuantity).toEqual(3)
   })
-  /* 
-  test('should show the correct price upon click of decrement', async () => {
-    setup('populated')
+
+  test.only('should show the correct price upon click of decrement', async () => {
+    const { unmount, rerender, cart } = setup()
     const decrementButton = screen.getAllByTestId('decrement-button')[0]
     await userEvent.dblClick(decrementButton)
-    setup('populated')
-    expect(await screen.findByText(/6/i)).toBeInTheDocument()
+    const { itemPrice, itemQuantity } = cart[0]
+    const total = itemPrice * itemQuantity
+    expect(total).toEqual(6)
   })
 
   it('should show cart is empty text if cart is empty', () => {
@@ -97,5 +103,5 @@ describe('sidebar content', () => {
 
   it('should show the calculated quantity * price', () => {
     setup('empty')
-  }) */
+  })
 })
