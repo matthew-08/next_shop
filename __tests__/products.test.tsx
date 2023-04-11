@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import { render, screen } from '@testing-library/react'
 import mockRouter from 'next-router-mock'
 import { MockedProvider } from '@apollo/client/testing'
