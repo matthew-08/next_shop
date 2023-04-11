@@ -13,9 +13,9 @@ import React, { useContext, useRef } from 'react'
 import { v4 as uuid } from 'uuid'
 import Link from 'next/link'
 import { UserCartContext } from '@/components/context/CartContext'
-import Image from 'next/image'
 import shopcart from '../public/shopping-cart.svg'
 import Sidebar from './Sidebar'
+import ImageComponent from './ImageComponent'
 
 const navbarLinks = [
   {
@@ -31,11 +31,6 @@ const navbarLinks = [
     to: '/Contact',
   },
 ]
-
-const CartImage = chakra(Image, {
-  shouldForwardProp: (prop) =>
-    ['height', 'width', 'quality', 'src', 'alt'].includes(prop),
-})
 
 function Navbar() {
   const [isSmallerThan1200] = useMediaQuery('(max-width: 1200px)')
@@ -97,7 +92,7 @@ function Navbar() {
               {cart?.length}
             </Circle>
           )}
-          <CartImage
+          <ImageComponent
             alt="cart"
             src={shopcart}
             borderRadius="full"

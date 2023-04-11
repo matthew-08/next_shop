@@ -4,13 +4,15 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { v4 as uuid } from 'uuid'
 import { Navigation } from 'swiper'
 import { useRouter } from 'next/router'
-import CARO_IMAGES from '../../utils/carouselImages'
-import wave from './wave.svg'
+import CARO_IMAGES from 'utils/carouselImages'
+import ImageComponent from '@/components/ImageComponent'
+import wave from 'public/wave.svg'
 import 'swiper/css'
 import 'swiper/css/navigation'
+import { poppins } from './_app'
 
 function Homepage() {
-  const navigate = useRouter()
+  const router = useRouter()
   const carouselImages = Object.values(CARO_IMAGES)
   return (
     <Flex flexDir="column" overflow="hidden" position="relative">
@@ -19,7 +21,7 @@ function Homepage() {
           <Text fontSize="1.9rem" color="gray.800" mb="2rem">
             An unbelievable online store.
           </Text>
-          <Heading fontSize="6rem" fontFamily="Poppins">
+          <Heading fontSize="6rem" className={poppins.className}>
             This is
             <br />
             not a real
@@ -30,7 +32,6 @@ function Homepage() {
             padding="3rem"
             mt="auto"
             mb="1.2rem"
-            fontFamily="Poppins"
             background="blackAlpha.900"
             color="white"
             _hover={{
@@ -38,7 +39,7 @@ function Homepage() {
             }}
             fontSize="2.5rem"
             borderRadius="40px"
-            onClick={() => navigate('/products')}
+            onClick={() => router.push('/products')}
           >
             Shop now!
           </Button>
@@ -53,7 +54,8 @@ function Homepage() {
                 }}
               >
                 <Flex width="100%" height="100%">
-                  <Image
+                  <ImageComponent
+                    alt="carousel image"
                     src={imgSrc}
                     borderRadius="30px"
                     objectFit="cover"
@@ -69,7 +71,7 @@ function Homepage() {
         </Flex>
       </Flex>
       <Image
-        src={wave}
+        src={wave.src}
         position="fixed"
         bgPosition="absolute"
         zIndex="-1"
