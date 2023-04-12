@@ -38,7 +38,7 @@ function Sidebar({
         colorScheme="green"
         width="100%"
         onClick={() => {
-          router.push('/signIn')
+          router.push('/auth/signin')
           onClose()
         }}
       >
