@@ -71,6 +71,7 @@ function Register() {
         router.push('/products')
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
   const isInputError = (input: keyof RegisterScehma) => input in errors
   return (

@@ -1,9 +1,16 @@
 /* eslint-disable testing-library/no-render-in-setup */
 import Register from '@/pages/auth/register'
-import { screen, render, getByLabelText } from '@testing-library/react'
+import {
+  screen,
+  render,
+  getByLabelText,
+  waitForElementToBeRemoved,
+  waitFor,
+} from '@testing-library/react'
 import mockRouter from 'next-router-mock'
 import { MockedProvider } from '@apollo/client/testing'
 import userEvent from '@testing-library/user-event'
+import { RegisterDocument } from 'graphql/generated/graphql'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
@@ -26,47 +33,96 @@ describe('Register Component', () => {
     )
   })
 
-  beforeEach(() => {
-    render(
-      <MockedProvider>
-        <Register />
-      </MockedProvider>
-    )
+  describe('form state', () => {
+    beforeEach(() => {
+      render(
+        <MockedProvider>
+          <Register />
+        </MockedProvider>
+      )
+    })
+    describe('Error fields on empty input', () => {
+      test('shows error message for email input', async () => {
+        await userEvent.type(inputs.password(), '3333')
+        await userEvent.click(buttons.submitButton())
+        expect(inputs.email()).toBeInvalid()
+      })
+      test('shows error message for password input', async () => {
+        await userEvent.type(inputs.email(), 'auser@gmail.com')
+        await userEvent.click(buttons.submitButton())
+        expect(inputs.password()).toBeInvalid()
+      })
+    })
+    describe('email input messages', () => {
+      test('shows invalid email message if user does not adhere to email format', async () => {
+        await userEvent.type(inputs.email(), 'auser')
+        await userEvent.click(buttons.submitButton())
+        expect(await screen.findByText(/valid email/i)).toBeInTheDocument()
+        expect(inputs.email()).toBeInvalid()
+      })
+    })
+    describe('password input messages', () => {
+      test('shows error message when password is too short', async () => {
+        await userEvent.type(inputs.password(), '11')
+        await userEvent.click(buttons.submitButton())
+        expect(
+          await screen.findByText(/at least 6 characters/i)
+        ).toBeInTheDocument()
+      })
+      test('shows error message when passwords do not match', async () => {
+        await userEvent.type(inputs.password(), 'password123')
+        await userEvent.type(inputs.confirmPassword(), 'password1234')
+        await userEvent.click(buttons.submitButton())
+        expect(inputs.confirmPassword()).toBeInvalid()
+        expect(await screen.findByText(/match/)).toBeInTheDocument()
+      })
+    })
   })
-  describe('Error fields on empty input', () => {
-    test('shows error message for email input', async () => {
-      await userEvent.type(inputs.password(), '3333')
-      await userEvent.click(buttons.submitButton())
-      expect(inputs.email()).toBeInvalid()
+
+  describe.only('submit with valid input', () => {
+    beforeEach(() => {
+      render(
+        <MockedProvider
+          mocks={[
+            {
+              request: {
+                query: RegisterDocument,
+                variables: {
+                  UserRegisterInput: {
+                    email: 'anemail@gmail.com',
+                    password: 'password123',
+                  },
+                },
+              },
+              result: {
+                data: {
+                  register: {
+                    __typename: 'MutationRegisterSuccess',
+                    data: {
+                      token: '123',
+                      email: 'anemail@gmail.com',
+                      id: '1',
+                    },
+                  },
+                },
+              },
+            },
+          ]}
+        >
+          <Register />
+        </MockedProvider>
+      )
     })
-    test('shows error message for password input', async () => {
-      await userEvent.type(inputs.email(), 'auser@gmail.com')
-      await userEvent.click(buttons.submitButton())
-      expect(inputs.password()).toBeInvalid()
-    })
-  })
-  describe('email input messages', () => {
-    test('shows invalid email message if user does not adhere to email format', async () => {
-      await userEvent.type(inputs.email(), 'auser')
-      await userEvent.click(buttons.submitButton())
-      expect(await screen.findByText(/valid email/i)).toBeInTheDocument()
-      expect(inputs.email()).toBeInvalid()
-    })
-  })
-  describe('password input messages', () => {
-    test('shows error message when password is too short', async () => {
-      await userEvent.type(inputs.password(), '11')
-      await userEvent.click(buttons.submitButton())
-      expect(
-        await screen.findByText(/at least 6 characters/i)
-      ).toBeInTheDocument()
-    })
-    test('shows error message when passwords do not match', async () => {
+    test('redirects upon successful login', async () => {
       await userEvent.type(inputs.password(), 'password123')
-      await userEvent.type(inputs.confirmPassword(), 'password1234')
+      await userEvent.type(inputs.confirmPassword(), 'password123')
+      await userEvent.type(inputs.email(), 'anemail@gmail.com')
       await userEvent.click(buttons.submitButton())
-      expect(inputs.confirmPassword()).toBeInvalid()
-      expect(await screen.findByText(/match/)).toBeInTheDocument()
+      await waitFor(() =>
+        expect(mockRouter).toMatchObject({
+          pathname: '/products',
+        })
+      )
     })
   })
 })
