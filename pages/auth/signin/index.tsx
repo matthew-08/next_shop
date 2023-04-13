@@ -88,7 +88,7 @@ function SignIn() {
         </FormControl>
         <Text>
           Don't have an account?{' '}
-          <Text href="/register" color="blue.400" as={Link}>
+          <Text href="/auth/register" color="blue.400" as={Link}>
             Sign up here.
           </Text>
         </Text>
