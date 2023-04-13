@@ -58,18 +58,20 @@ function Register() {
       },
     })
   }
-  if (data) {
-    if (data.register.__typename === 'MutationRegisterSuccess') {
-      const { token } = data.register.data
-      setUser({
-        email: data.register.data.email,
-        id: data.register.data.id,
-      })
 
-      localStorage.setItem('token', token)
-      router.push('/products')
+  useEffect(() => {
+    if (data) {
+      if (data.register.__typename === 'MutationRegisterSuccess') {
+        const { token } = data.register.data
+        setUser({
+          email: data.register.data.email,
+          id: data.register.data.id,
+        })
+        localStorage.setItem('token', token)
+        router.push('/products')
+      }
     }
-  }
+  }, [data])
   const isInputError = (input: keyof RegisterScehma) => input in errors
   return (
     <VStack
