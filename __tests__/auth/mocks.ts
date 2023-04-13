@@ -1,16 +1,11 @@
 import { ApolloCache } from "@apollo/client";
 import * as Apollo from '@apollo/client'
-import { LogInMutationResult } from "graphql/generated/graphql";
-import { LogInMutationVariables } from "graphql/generated/graphql";
+import { LogInMutationResult , LogInMutationVariables } from "graphql/generated/graphql";
 
-const input: LogInMutationVariables = {
-LoginType: {
-    email
-}
-}
+const input: LogInMutationVariables
 
 
-const mockFactory = (query: Apollo.DocumentNode, mockResult: ) => (
+const mockFactory = (query: Apollo.DocumentNode, mockResult) => (
     {
         request: {
             query,
@@ -18,7 +13,7 @@ const mockFactory = (query: Apollo.DocumentNode, mockResult: ) => (
           },
           result: {
             data: {
-              currentUser: mockPrisonUser,
+              currentUser: 0,
             },
         }
     })
