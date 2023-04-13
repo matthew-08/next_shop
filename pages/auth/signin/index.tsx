@@ -10,11 +10,13 @@ import {
   ButtonGroup,
   Image,
   Button,
+  FormErrorMessage,
 } from '@chakra-ui/react'
 import { useForm, FormState } from 'react-hook-form'
 import { useLogInMutation } from 'graphql/generated/graphql'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
+import { AuthContext } from '@/components/context/AccountContext'
 
 interface Form {
   email: string
@@ -25,6 +27,7 @@ function SignIn() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isDirty },
   } = useForm<Form>({
     defaultValues: {
@@ -33,8 +36,9 @@ function SignIn() {
     },
   })
   const [mutateFunction, { data, loading, error }] = useLogInMutation()
+  const { user, setUser } = useContext(AuthContext)
 
-  const onSubmit = (formData: Form) => {
+  const onSubmit = async (formData: Form) => {
     localStorage.setItem('token', '123')
     mutateFunction({
       variables: {
@@ -45,18 +49,23 @@ function SignIn() {
       },
     })
   }
-  if (loading) {
-    console.log('loading')
-  }
 
   useEffect(() => {
     if (data?.login.__typename === 'MutationLoginSuccess') {
       localStorage.setItem('token', data.login.data.token)
+      const { email, id } = data.login.data
+      setUser({ email, id })
+    } else {
+      const message = data?.login.message
+      if (message?.includes('email')) {
+        setError('email', { message })
+      } else if (message?.includes('Password')) {
+        setError('password', { message })
+      }
     }
   }, [data])
 
-  console.log(isDirty)
-
+  const fieldHasError = (type: 'password' | 'email') => type in errors
   return (
     <>
       <VStack
@@ -67,13 +76,15 @@ function SignIn() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Heading>Sign-In</Heading>
-        <FormControl>
+        <FormControl isInvalid={fieldHasError('email')}>
           <FormLabel>Email</FormLabel>
           <Input type="email" {...register('email')} />
+          <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
         </FormControl>
-        <FormControl>
+        <FormControl isInvalid={fieldHasError('password')}>
           <FormLabel>Password</FormLabel>
           <Input type="text" {...register('password')} />
+          <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
         </FormControl>
         <Text>
           Don't have an account?{' '}
@@ -83,6 +94,7 @@ function SignIn() {
         </Text>
         <ButtonGroup>
           <Button
+            isLoading={loading}
             backgroundColor="cyan.100"
             size="lg"
             fontSize="1.4rem"

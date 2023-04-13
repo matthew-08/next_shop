@@ -133,7 +133,7 @@ builder.mutationFields((t) => ({
         },
       });
       if (!findUser) {
-        throw new Error('invalid email');
+        throw new Error('Invalid email');
       }
       if (findUser.password === args.input.password) {
         return {
@@ -142,7 +142,7 @@ builder.mutationFields((t) => ({
           email: findUser.email,
         };
       }
-      throw new Error('Wrong password');
+      throw new Error('Wrong password, please try again.');
     },
 
   }),

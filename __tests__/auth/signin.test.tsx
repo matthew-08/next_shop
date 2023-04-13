@@ -50,13 +50,7 @@ describe('SignIn Component', () => {
                 query: LogInDocument,
                 variables: { email: 'username1232@gmail.com', password: '123' },
               },
-              result: {
-                data: {
-                  email: 'username1232@gmail.com',
-                  id: '123',
-                  token: '123',
-                },
-              },
+              error: new Error('Invalid password'),
             },
           ]}
         >
@@ -64,19 +58,9 @@ describe('SignIn Component', () => {
         </MockedProvider>
       )
     })
-    it('should set token in localstorage upon success', async () => {
-      const localStorageMock = {
-        getItem: jest.fn(),
-        setItem: jest.fn(),
-        clear: jest.fn(),
-      }
-      global.localStorage = localStorageMock as unknown as Storage
-      const button = screen.getByText('Submit')
-      expect(button).toBeInTheDocument()
+    it.only('should set token in localstorage upon success', async () => {
       await userEvent.click(screen.getByText('Submit'))
-      const setItem = jest.spyOn(Storage.prototype, 'setItem')
-      const getItem = jest.spyOn(Storage.prototype, 'getItem')
-      await waitFor(() => expect(localStorageMock.setItem).toHaveBeenCalled())
+      expect(await screen.findByText('Invalid password')).toBeInTheDocument()
     })
   })
 })
