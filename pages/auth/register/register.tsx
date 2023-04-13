@@ -20,8 +20,9 @@ import { useContext, useEffect } from 'react'
 import { AuthContext } from '@/components/context/AccountContext'
 import { useRegisterMutation } from 'graphql/generated/graphql'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
 import { RegisterScehma } from '@/types/types'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const registerSchema = object({
   email: string().required('Email is required'),
@@ -40,10 +41,9 @@ function Register() {
   } = useForm<RegisterScehma>({
     resolver: yupResolver(registerSchema),
   })
-  const navigate = useNavigate()
+  const router = useRouter()
   const { user, setUser } = useContext(AuthContext)
   const [registerMutation, { data, loading, error }] = useRegisterMutation()
-  const [] = use
   const onSubmit = (formData: RegisterScehma) => {
     registerMutation({
       variables: {
@@ -63,7 +63,7 @@ function Register() {
       })
 
       localStorage.setItem('token', token)
-      navigate('/products')
+      router.push('/products')
     }
   }
   const isInputError = (input: keyof RegisterScehma) => input in errors
@@ -102,7 +102,7 @@ function Register() {
       </FormControl>
       <Text>
         Already have an account?{' '}
-        <Text to="/" color="blue.400" as={NavLink}>
+        <Text href="/auth/signin" color="blue.400" as={Link}>
           Sign in here.
         </Text>
       </Text>
