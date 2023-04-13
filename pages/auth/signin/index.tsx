@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-props-no-spreading */
 import {
   FormControl,
@@ -13,6 +14,7 @@ import {
 import { useForm, FormState } from 'react-hook-form'
 import { useLogInMutation } from 'graphql/generated/graphql'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 interface Form {
   email: string
@@ -33,6 +35,7 @@ function SignIn() {
   const [mutateFunction, { data, loading, error }] = useLogInMutation()
 
   const onSubmit = (formData: Form) => {
+    localStorage.setItem('token', '123')
     mutateFunction({
       variables: {
         LoginType: {
@@ -45,9 +48,12 @@ function SignIn() {
   if (loading) {
     console.log('loading')
   }
-  if (data) {
-    console.log(data)
-  }
+
+  useEffect(() => {
+    if (data?.login.__typename === 'MutationLoginSuccess') {
+      localStorage.setItem('token', data.login.data.token)
+    }
+  }, [data])
 
   console.log(isDirty)
 
