@@ -12,7 +12,7 @@ const inputs = {
   password: () => screen.getByLabelText('Password'),
 }
 
-const button = {
+const buttons = {
   submitButton: () => screen.getByText('Submit'),
 }
 
@@ -35,12 +35,12 @@ describe('Register Component', () => {
     })
     test('shows error message for email input', async () => {
       await userEvent.type(inputs.password(), '3333')
-      await userEvent.click(button.submitButton())
+      await userEvent.click(buttons.submitButton())
       expect(inputs.email()).toBeInvalid()
     })
     test('shows error message for password input', async () => {
       await userEvent.type(inputs.email(), 'auser@gmail.com')
-      await userEvent.click(button.submitButton())
+      await userEvent.click(buttons.submitButton())
       expect(inputs.password()).toBeInvalid()
     })
   })
