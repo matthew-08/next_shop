@@ -25,11 +25,15 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 const registerSchema = object({
-  email: string().required('Email is required'),
+  email: string()
+    .email('Please enter a valid email')
+    .required('Email is required'),
   password: string()
     .required('Password is required.')
     .min(6, 'Your password must be at least 6 characters long'),
-  confirmPassword: string().oneOf([ref('password')], 'Passwords must match'),
+  confirmPassword: string()
+    .oneOf([ref('password')], 'Passwords must match')
+    .required('Password is required'),
 })
 
 function Register() {
