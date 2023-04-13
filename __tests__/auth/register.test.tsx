@@ -79,7 +79,7 @@ describe('Register Component', () => {
     })
   })
 
-  describe.only('submit with valid input', () => {
+  describe('submit with valid input', () => {
     beforeEach(() => {
       render(
         <MockedProvider
