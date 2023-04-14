@@ -1,14 +1,51 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { ReactNode } from 'react'
 import { Flex, Text, Button } from '@chakra-ui/react'
 import { User } from '@/types/types'
+import { CartItem } from '@prisma/client'
+import { useRouter } from 'next/router'
 
 interface Props {
   onClose: () => void
-  mainButton: ReactNode
   user: User | null
+  cart: CartItem[]
 }
 
-function SidebarButtonGroup({ onClose, mainButton, user }: Props) {
+function SidebarButtonGroup({ onClose, user, cart }: Props) {
+  const router = useRouter()
+  let mainButton: ReactNode
+  if (!user?.email) {
+    mainButton = (
+      <Button
+        fontSize="1.5rem"
+        padding="1.5rem"
+        colorScheme="green"
+        width="100%"
+        onClick={() => {
+          router.push('/auth/signin')
+          onClose()
+        }}
+      >
+        Login
+      </Button>
+    )
+  } else {
+    mainButton = (
+      <Button
+        isDisabled={cart?.length === 0}
+        fontSize="1.5rem"
+        padding="1.5rem"
+        colorScheme="green"
+        width="100%"
+        onClick={() => {
+          router.push('/checkout')
+          onClose()
+        }}
+      >
+        Checkout
+      </Button>
+    )
+  }
   return (
     <Flex m="auto" flexDir="column" width="60%" gap="0.5rem">
       {!user ||
