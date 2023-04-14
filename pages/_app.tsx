@@ -1,19 +1,24 @@
 import '@/styles/global.css'
 import type { AppProps } from 'next/app'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { ApolloProvider } from '@apollo/client'
 import client from 'apollo-client'
 import Layout from '@/components/Layout'
-import { Poppins } from 'next/font/google'
+import localFont from 'next/font/local'
 
-export const poppins = Poppins({
-  weight: '500',
-  subsets: ['devanagari'],
+export const poppins = localFont({
+  src: '../fonts/poppins/Poppins-Bold.ttf',
+})
+
+const theme = extendTheme({
+  fonts: {
+    heading: poppins.style.fontFamily,
+  },
 })
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <ApolloProvider client={client}>
         <Layout>
           <Component {...pageProps} />
