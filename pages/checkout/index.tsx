@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid'
 import { UserCartContext } from '@/components/context/CartContext'
 import CartProduct from '@/components/CartProduct'
 import CheckoutForm from '@/components/Checkout/CheckoutForm'
+import TotalSection from '@/components/Checkout/TotalSection'
 
 function Checkout() {
   const { cart, total } = useContext(UserCartContext)
@@ -23,38 +24,7 @@ function Checkout() {
             <CartProduct cartItem={item} key={uuid()} />
           ))}
         </VStack>
-        <Flex
-          mt="auto"
-          fontSize="1.5rem"
-          flexDir="column"
-          align="center"
-          width="50%"
-        >
-          <Flex
-            width="100%"
-            borderBottom="2px solid"
-            borderColor="gray.300"
-            mb="0.4rem"
-          >
-            <Text>Summary:</Text>
-          </Flex>
-          <Flex justifyContent="space-between" width="100%">
-            <Text>Subtotal:</Text>
-            <Text> ${total()} </Text>
-          </Flex>
-          <Flex justifyContent="space-between" width="100%">
-            <Text>Shipping:</Text>
-            <Text> FREE </Text>
-          </Flex>
-          <Flex justifyContent="space-between" width="100%">
-            <Text>Taxes and fees:</Text>
-            <Text> ${Math.round((total() * 0.7) / 100)} </Text>
-          </Flex>
-          <Flex justifyContent="space-between" width="100%">
-            <Text>Total:</Text>
-            <Text> ${Math.round((total() * 0.7) / 100) + total()} </Text>
-          </Flex>
-        </Flex>
+        <TotalSection total={total()} />
       </Flex>
       <Flex
         flexGrow="1"
