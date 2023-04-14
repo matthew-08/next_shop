@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 /* eslint-disable testing-library/no-render-in-setup */
 import Register from '@/pages/auth/register'
 import {
@@ -10,7 +11,14 @@ import {
 import mockRouter from 'next-router-mock'
 import { MockedProvider } from '@apollo/client/testing'
 import userEvent from '@testing-library/user-event'
-import { RegisterDocument } from 'graphql/generated/graphql'
+import {
+  RegisterDocument,
+  RegisterMutation,
+  RegisterMutationOptions,
+  RegisterMutationResult,
+  RegisterMutationVariables,
+} from 'graphql/generated/graphql'
+import generateMutationMock from '__tests__/utils/generateMutationMock'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
@@ -81,34 +89,30 @@ describe('Register Component', () => {
 
   describe('submit with valid input', () => {
     beforeEach(() => {
-      render(
-        <MockedProvider
-          mocks={[
-            {
-              request: {
-                query: RegisterDocument,
-                variables: {
-                  UserRegisterInput: {
-                    email: 'anemail@gmail.com',
-                    password: 'password123',
-                  },
-                },
-              },
-              result: {
-                data: {
-                  register: {
-                    __typename: 'MutationRegisterSuccess',
-                    data: {
-                      token: '123',
-                      email: 'anemail@gmail.com',
-                      id: '1',
-                    },
-                  },
-                },
-              },
+      const mock = generateMutationMock<
+        RegisterMutation,
+        RegisterMutationVariables
+      >(
+        RegisterDocument,
+        {
+          register: {
+            __typename: 'MutationRegisterSuccess',
+            data: {
+              token: '123',
+              email: 'anemail@gmail.com',
+              id: '1',
             },
-          ]}
-        >
+          },
+        },
+        {
+          UserRegisterInput: {
+            email: 'anemail@gmail.com',
+            password: 'password123',
+          },
+        }
+      )
+      render(
+        <MockedProvider mocks={[mock]}>
           <Register />
         </MockedProvider>
       )
