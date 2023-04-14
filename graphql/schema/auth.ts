@@ -4,7 +4,6 @@ import JWTSecretKey from 'graphql/utils/envVariables';
 import builder from '../builder';
 import verifyJWT from '../utils/verifyJWT';
 
-console.log(JWTSecretKey);
 const user = builder.prismaObject('User', {
   description: 'Object type representing a user',
   select: {
