@@ -12,4 +12,7 @@ describe('total section', () => {
   test('it should render the correct tax', () => {
     expect(screen.getByTestId('tax')).toHaveTextContent(/3.50/)
   })
+  test('it should render the total', () => {
+    expect(screen.getByTestId('total')).toHaveTextContent(/53.50/)
+  })
 })

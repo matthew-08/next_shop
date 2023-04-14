@@ -36,8 +36,8 @@ function TotalSection({ total }: Props) {
         <Text data-testid="tax"> ${tax} </Text>
       </Flex>
       <Flex justifyContent="space-between" width="100%">
-        <Text data-testid="total">Total:</Text>
-        <Text> ${finalTotal} </Text>
+        <Text>Total:</Text>
+        <Text data-testid="total"> ${finalTotal.toFixed(2)} </Text>
       </Flex>
     </Flex>
   )

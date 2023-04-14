@@ -28,7 +28,7 @@ const navbarLinks = [
   },
   {
     name: 'Contact',
-    to: '/Contact',
+    to: '/contact',
   },
 ]
 
