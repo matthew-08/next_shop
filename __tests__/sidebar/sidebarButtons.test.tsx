@@ -72,7 +72,8 @@ describe('Sidebar Buttons', () => {
     test('Allows user to checkout if cart is populated', () => {
       expect(screen.getByText('Checkout')).not.toBeDisabled()
     })
-    test('Redirects to checkout page upon click of checkout', async () => {
+
+    test('Redirects to checkout page upon click of checkout button', async () => {
       await userEvent.click(screen.getByText('Checkout'))
       await waitFor(() =>
         expect(mockRouter).toMatchObject({
