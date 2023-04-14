@@ -14,7 +14,7 @@ import { v4 as uuid } from 'uuid'
 import Link from 'next/link'
 import { UserCartContext } from '@/components/context/CartContext'
 import shopcart from '../public/shopping-cart.svg'
-import Sidebar from './Sidebar'
+import Sidebar from './Sidebar/Sidebar'
 import ImageComponent from './ImageComponent'
 
 const navbarLinks = [

@@ -1,11 +1,9 @@
 /* eslint-disable testing-library/no-render-in-setup */
 import SignIn from '@/pages/auth/signin'
-import { ApolloProvider, gql } from '@apollo/client'
+import { gql } from '@apollo/client'
 import { MockedProvider } from '@apollo/client/testing'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { GraphQLError } from 'graphql'
-import { LogInMutationResult, LogInDocument } from 'graphql/generated/graphql'
 
 const signInMutation = gql`
   mutation LogIn($LoginType: LoginType!) {

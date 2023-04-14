@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { ReactNode, useContext } from 'react'
 import {
   Drawer,
   DrawerOverlay,
@@ -15,6 +15,7 @@ import { useRouter } from 'next/router'
 import { AuthContext } from '@/components/context/AccountContext'
 import { UserCartContext } from '@/components/context/CartContext'
 import SidebarContent from './SidebarContent'
+import SidebarButtonGroup from './SidebarButtonGroup'
 
 function Sidebar({
   isOpen,
@@ -29,7 +30,7 @@ function Sidebar({
   const { cart } = useContext(UserCartContext)
   const router = useRouter()
 
-  let mainButton
+  let mainButton: ReactNode
   if (!user?.email) {
     mainButton = (
       <Button
@@ -80,25 +81,11 @@ function Sidebar({
         </DrawerBody>
 
         <DrawerFooter alignItems="center" mb="2rem">
-          <Flex m="auto" flexDir="column" width="60%" gap="0.5rem">
-            {!user && (
-              <Text textAlign="center">
-                *You aren't currently logged in. Log in to save your cart and
-                checkout!
-              </Text>
-            )}
-            <Button
-              fontSize="1.5rem"
-              width="100%"
-              padding="1.5rem"
-              variant="outline"
-              mr={3}
-              onClick={onClose}
-            >
-              Cancel
-            </Button>
-            {mainButton}
-          </Flex>
+          <SidebarButtonGroup
+            mainButton={mainButton}
+            onClose={onClose}
+            user={user}
+          />
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

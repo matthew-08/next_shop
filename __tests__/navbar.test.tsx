@@ -1,5 +1,5 @@
 import { getByText, render, screen, GetByText } from '@testing-library/react'
-import Sidebar from '@/components/Sidebar'
+import Sidebar from '@/components/Sidebar/Sidebar'
 import AccountContext, {
   AuthContext,
 } from '@/components/context/AccountContext'
@@ -24,7 +24,7 @@ describe('navbar', () => {
       asPath: '/',
     })
     userEvent.click(screen.getByText('Products'))
-    mockRouter.push('/products')
+    mockRouter.push('/p roducts')
     expect(mockRouter).toMatchObject({
       asPath: '/products',
     })

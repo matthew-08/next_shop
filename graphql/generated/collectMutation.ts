@@ -45,7 +45,5 @@ console.log('test\r\nnine')
     return GraphQlDocuments
 }
  */
-const test = syncReadFile('graphql.tsx')
-console.log(test)
 
   

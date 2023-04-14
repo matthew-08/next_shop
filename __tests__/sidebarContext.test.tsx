@@ -1,19 +1,11 @@
 /* eslint-disable testing-library/no-render-in-setup */
 /* eslint-disable no-plusplus */
 import { UserCartContext } from '@/components/context/CartContext'
-import SidebarContent from '@/components/SidebarContent'
-import {
-  screen,
-  render,
-  fireEvent,
-  waitFor,
-  getAllByTestId,
-  findAllByTestId,
-} from '@testing-library/react'
+import { screen, render } from '@testing-library/react'
 import Navbar from '@/components/Navbar'
 import userEvent from '@testing-library/user-event'
 import { ShopItem } from 'graphql/generated/graphql'
-import { KeyboardHost } from '@testing-library/user-event/dist/types/system/keyboard'
+import SidebarContent from '@/components/Sidebar/SidebarContent'
 
 let cartMock: ShopItem[]
 const emptyCartMock: any[] = []
@@ -92,16 +84,7 @@ describe('sidebar content with cart items', () => {
   })
 
   it('should show cart is empty text if cart is empty', () => {
-    unmount()
-    setup('empty')
+    setup()
     expect(screen.getByText('Your cart is empty.')).toBeInTheDocument()
-  })
-
-  it('should delete item from cart if decremented from 1', () => {
-    setup('empty')
-  })
-
-  it('should show the calculated quantity * price', () => {
-    setup('empty')
   })
 })
