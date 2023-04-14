@@ -25,18 +25,18 @@ function TotalSection({ total }: Props) {
       </Flex>
       <Flex justifyContent="space-between" width="100%">
         <Text>Subtotal:</Text>
-        <Text> ${total} </Text>
+        <Text data-testid="subtotal"> ${total} </Text>
       </Flex>
       <Flex justifyContent="space-between" width="100%">
         <Text>Shipping:</Text>
         <Text> FREE </Text>
       </Flex>
       <Flex justifyContent="space-between" width="100%">
-        <Text>Taxes and fees:</Text>
-        <Text> ${tax} </Text>
+        <Text> Taxes and fees:</Text>
+        <Text data-testid="tax"> ${tax} </Text>
       </Flex>
       <Flex justifyContent="space-between" width="100%">
-        <Text>Total:</Text>
+        <Text data-testid="total">Total:</Text>
         <Text> ${finalTotal} </Text>
       </Flex>
     </Flex>
