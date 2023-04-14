@@ -1,14 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { ReactNode } from 'react'
 import { Flex, Text, Button } from '@chakra-ui/react'
-import { User } from '@/types/types'
-import { CartItem } from '@prisma/client'
+import { CartItem, User } from '@/types/types'
 import { useRouter } from 'next/router'
 
 interface Props {
   onClose: () => void
   user: User | null
-  cart: CartItem[]
+  cart: CartItem[] | null
 }
 
 function SidebarButtonGroup({ onClose, user, cart }: Props) {

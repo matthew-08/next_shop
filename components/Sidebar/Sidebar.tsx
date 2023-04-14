@@ -6,10 +6,6 @@ import {
   DrawerCloseButton,
   DrawerBody,
   DrawerFooter,
-  Button,
-  VStack,
-  Flex,
-  Text,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { AuthContext } from '@/components/context/AccountContext'
@@ -30,40 +26,6 @@ function Sidebar({
   const { cart } = useContext(UserCartContext)
   const router = useRouter()
 
-  let mainButton: ReactNode
-  if (!user?.email) {
-    mainButton = (
-      <Button
-        fontSize="1.5rem"
-        padding="1.5rem"
-        colorScheme="green"
-        width="100%"
-        onClick={() => {
-          router.push('/auth/signin')
-          onClose()
-        }}
-      >
-        Login
-      </Button>
-    )
-  } else {
-    mainButton = (
-      <Button
-        isDisabled={cart?.length === 0}
-        fontSize="1.5rem"
-        padding="1.5rem"
-        colorScheme="green"
-        width="100%"
-        onClick={() => {
-          router.push('/checkout')
-          onClose()
-        }}
-      >
-        Checkout
-      </Button>
-    )
-  }
-
   return (
     <Drawer
       isOpen={isOpen}
@@ -81,11 +43,7 @@ function Sidebar({
         </DrawerBody>
 
         <DrawerFooter alignItems="center" mb="2rem">
-          <SidebarButtonGroup
-            mainButton={mainButton}
-            onClose={onClose}
-            user={user}
-          />
+          <SidebarButtonGroup cart={cart} onClose={onClose} user={user} />
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
