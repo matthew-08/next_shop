@@ -4,7 +4,7 @@ import { LogInMutationResult , LogInMutationVariables , LogInDocument, LoginType
 import Register from "@/pages/auth/register";
 
 
-
+/* 
 const mockFactory = (query: Apollo.DocumentNode, mockResult) => (
     {
         request: {
@@ -152,3 +152,5 @@ const generatedMock = GenerateMock<RegisterMutation, RegisterMutationVariables>(
     password: '1123123'
   }
 })
+ */
+console.log(RegisterDocument)

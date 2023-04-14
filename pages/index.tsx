@@ -9,8 +9,10 @@ import ImageComponent from '@/components/ImageComponent'
 import wave from 'public/wave.svg'
 import 'swiper/css'
 import 'swiper/css/navigation'
+import { RegisterDocument } from 'graphql/generated/graphql'
 import { poppins } from './_app'
 
+console.log(RegisterDocument)
 function Homepage() {
   const router = useRouter()
   const carouselImages = Object.values(CARO_IMAGES)
