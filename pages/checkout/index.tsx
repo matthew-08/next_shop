@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { v4 as uuid } from 'uuid'
 import { UserCartContext } from '@/components/context/CartContext'
 import CartProduct from '@/components/CartProduct'
-import CheckoutForm from './CheckoutForm'
+import CheckoutForm from '@/components/Checkout/CheckoutForm'
 
 function Checkout() {
   const { cart, total } = useContext(UserCartContext)
