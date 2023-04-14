@@ -10,13 +10,14 @@ import wave from 'public/wave.svg'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { RegisterDocument } from 'graphql/generated/graphql'
+import Footer from '@/components/Footer'
 import { poppins } from './_app'
 
 function Homepage() {
   const router = useRouter()
   const carouselImages = Object.values(CARO_IMAGES)
   return (
-    <Flex flexDir="column" overflow="hidden" position="relative">
+    <Flex flexDir="column" overflow="hidden" position="relative" height="100%">
       <Flex justify="center" mt="4rem">
         <Flex mr="5rem" textAlign="left" flexDir="column">
           <Text fontSize="1.9rem" color="gray.800" mb="2rem">
@@ -71,13 +72,14 @@ function Homepage() {
           </Swiper>
         </Flex>
       </Flex>
+      <Footer />
       <Image
         src={wave.src}
-        position="fixed"
+        position="absolute"
         bgPosition="absolute"
         zIndex="-1"
         transform="scaleX(-1)"
-        bottom={-40}
+        bottom={0}
       />
     </Flex>
   )

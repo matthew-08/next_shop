@@ -51,9 +51,10 @@ function Navbar() {
       flexDir={isSmallerThan1200 ? 'column' : 'row'}
     >
       <Heading
-        fontSize={isSmallerThan700 ? '2.7rem' : '4rem'}
+        fontSize={isSmallerThan700 ? '2.7rem' : '5rem'}
         color="cyan.100"
         mr="auto"
+        fontFamily="heading"
         fontWeight="bold"
         margin={isSmallerThan1200 ? 'auto' : ''}
       >
@@ -69,7 +70,16 @@ function Navbar() {
           mb={isSmallerThan700 ? '1.2rem' : '0.5rem'}
         >
           {navbarLinks.map((link) => (
-            <ListItem key={uuid()} as={Link} href={link.to}>
+            <ListItem
+              fontFamily="heading"
+              color="cyan.100"
+              _hover={{
+                color: 'cyan.200',
+              }}
+              key={uuid()}
+              as={Link}
+              href={link.to}
+            >
               {link.name}
             </ListItem>
           ))}
