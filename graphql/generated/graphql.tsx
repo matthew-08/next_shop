@@ -1,8 +1,5 @@
-import pkg from '@apollo/client'
-
+import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
-// eslint-disable-next-line prefer-destructuring
-const gql = pkg.gql
 
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
