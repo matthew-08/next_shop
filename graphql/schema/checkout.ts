@@ -45,27 +45,19 @@ builder.mutationFields((t) => ({
                 }
             })
             if(cartItems) {
-                const shopItem = cartItems?.CartItem.map(item => item.item)
-                const generatedLineItems = shopItem?.map(item => item.)
+                const shopItem = cartItems?.CartItem.map(item => {
+                    const cartQuantity = item.quantity
+                    return {
+                        ...item.item,
+                        quantity: cartQuantity,
+                    }
+                })
+                const generatedLineItems = shopItem?.map(item => LineItem(item))
                 const session = await stripe.checkout.sessions.create({
-                    line_items: [
-                        {
-                            quantity: 2,
-                            price_data: {
-                                currency: 'USD',
-                                unit_amount: 30 * 100,
-                                tax_behavior: 'inclusive',
-                                product_data: {
-                                    images: ['https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg'],
-                                    name: 'name',
-                                    description: 'description',
-                                }
-                            }
-                        }
-                    ],
+                    line_items: generatedLineItems,
                     mode: 'payment',
                     success_url: `http://localhost:3000/?success=true`,
-                    cancel_url: `http://localhost:3000/?canceled=true`,
+                    cancel_url: `http://localhost:3000/checkout?canceled=true`,
                 }) 
                 return session.url as string
             }
