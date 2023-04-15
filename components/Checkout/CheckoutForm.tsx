@@ -7,6 +7,7 @@ import {
   HStack,
   useDisclosure,
   Heading,
+  Button,
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 import { CheckoutSchema } from '@/types/types'
@@ -28,22 +29,37 @@ const registerSchema = object({
   city: string().required(requiredMessage),
   firstName: string().required(requiredMessage),
   lastName: string().required(requiredMessage),
-  phoneNumber: number().required(requiredMessage),
-  zipCode: number().required(requiredMessage),
+  phoneNumber: number()
+    .required(requiredMessage)
+    .typeError('Please enter a valid number'),
+  zipCode: number()
+    .required(requiredMessage)
+    .typeError('Please enter a valid zip code'),
 })
 
 function CheckoutForm() {
   const { isOpen, onToggle } = useDisclosure()
   const {
     register,
+    handleSubmit,
     formState: { errors },
   } = useForm<CheckoutSchema>({
     resolver: yupResolver(registerSchema),
   })
 
+  const submitForm = (form: CheckoutSchema) => {
+    console.log(form)
+  }
   const fieldHasError = (field: keyof CheckoutSchema) => field in errors
   return (
-    <Flex as="form" flexDir="column" width="100%" px="2rem" gap="2rem">
+    <Flex
+      as="form"
+      flexDir="column"
+      width="100%"
+      px="2rem"
+      gap="2rem"
+      onSubmit={handleSubmit(submitForm)}
+    >
       <Heading mb="3rem">Delivery Information:</Heading>
       <HStack>
         <FormField
@@ -105,6 +121,7 @@ function CheckoutForm() {
           register={register}
         />
       </HStack>
+      <Button type="submit">SUBMIT</Button>
     </Flex>
   )
 }

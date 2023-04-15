@@ -43,5 +43,4 @@ export interface CheckoutSchema {
   city: string;
   zipCode: string;
   phoneNumber: number;
-  [index: string]: string
 }
