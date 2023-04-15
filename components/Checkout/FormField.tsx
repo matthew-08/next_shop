@@ -10,7 +10,7 @@ import { CheckoutSchema } from '@/types/types'
 
 interface Props {
   labelText: string
-  register: (d: keyof CheckoutSchema) => object
+  register: (name: string) => object
   input: keyof CheckoutSchema
   error: {
     hasError: boolean
