@@ -1,13 +1,34 @@
 import { Flex, Heading, VStack, Text, Button } from '@chakra-ui/react'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { v4 as uuid } from 'uuid'
 import { UserCartContext } from '@/components/context/CartContext'
 import CartProduct from '@/components/CartProduct'
 import CheckoutForm from '@/components/Checkout/CheckoutForm'
 import TotalSection from '@/components/Checkout/TotalSection'
+import { useCheckoutMutation } from 'graphql/generated/graphql'
 
 function Checkout() {
-  const { cart, total } = useContext(UserCartContext)
+  const { cart, total, id: cartId } = useContext(UserCartContext)
+  const [checkoutMutation, { loading, data, error }] = useCheckoutMutation()
+
+  useEffect(() => {
+    if (loading) {
+      console.log('loading  ')
+    }
+    if (data) {
+      console.log(data)
+    }
+  }, [data, loading])
+
+  const handleSubmit = () => {
+    if (cartId) {
+      checkoutMutation({
+        variables: {
+          cartId,
+        },
+      })
+    }
+  }
   return (
     <Flex minW="100%" px="4rem" py="1rem" overflowX="hidden" minH="80%">
       <Flex
@@ -36,7 +57,7 @@ function Checkout() {
       >
         <Heading>Order Details:</Heading>
         <CheckoutForm />
-        <Button>Submit</Button>
+        <Button onClick={handleSubmit}>Submit</Button>
       </Flex>
     </Flex>
   )
