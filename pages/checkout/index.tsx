@@ -1,4 +1,4 @@
-import { Flex, Heading, VStack, Text } from '@chakra-ui/react'
+import { Flex, Heading, VStack, Text, Button } from '@chakra-ui/react'
 import { useContext } from 'react'
 import { v4 as uuid } from 'uuid'
 import { UserCartContext } from '@/components/context/CartContext'
@@ -36,6 +36,7 @@ function Checkout() {
       >
         <Heading>Order Details:</Heading>
         <CheckoutForm />
+        <Button>Submit</Button>
       </Flex>
     </Flex>
   )
