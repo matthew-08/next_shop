@@ -33,7 +33,7 @@ const MemoProductCard = memo(({ productInfo }: { productInfo: ShopItem }) => {
         </Flex>
         <Flex minH="150px" flexDir="column" width="100%">
           <Text fontSize="2rem" mt="auto" mb="0.8rem">
-            ${productInfo.itemPrice}
+            ${productInfo.itemPrice.toFixed(2)}
           </Text>
 
           <Button
