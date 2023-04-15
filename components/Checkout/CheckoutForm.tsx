@@ -10,14 +10,36 @@ import {
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 import { CheckoutSchema } from '@/types/types'
+import {
+  AnyObjectSchema,
+  object,
+  string,
+  ObjectSchema,
+  TypeFromShape,
+  number,
+} from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 import FormField from './FormField'
+
+const requiredMessage = 'Field is required'
+
+const registerSchema = object({
+  address: string().required(requiredMessage),
+  city: string().required(requiredMessage),
+  firstName: string().required(requiredMessage),
+  lastName: string().required(requiredMessage),
+  phoneNumber: number().required(requiredMessage),
+  zipCode: number().required(requiredMessage),
+})
 
 function CheckoutForm() {
   const { isOpen, onToggle } = useDisclosure()
   const {
     register,
     formState: { errors },
-  } = useForm<CheckoutSchema>()
+  } = useForm<CheckoutSchema>({
+    resolver: yupResolver(registerSchema),
+  })
 
   const fieldHasError = (field: keyof CheckoutSchema) => field in errors
   return (

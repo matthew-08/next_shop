@@ -1,5 +1,10 @@
 import React from 'react'
-import { FormControl, FormLabel, Input } from '@chakra-ui/react'
+import {
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+} from '@chakra-ui/react'
 import { UseFormRegister } from 'react-hook-form'
 import { CheckoutSchema } from '@/types/types'
 
@@ -19,6 +24,7 @@ function FormField({ labelText, register, input, error }: Props) {
         {labelText}
       </FormLabel>
       <Input {...register(input)} type="text" py="1.5rem" fontSize="1.2rem" />
+      <FormErrorMessage>{error.errorMsg}</FormErrorMessage>
     </FormControl>
   )
 }
