@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Flex,
   FormControl,
@@ -20,24 +20,15 @@ import {
   number,
 } from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useCheckoutMutation } from 'graphql/generated/graphql'
 import FormField from './FormField'
+import registerSchema from './validationSchema/validationSchema'
 
-const requiredMessage = 'Field is required'
+interface Props {
+  cartId: string | null
+}
 
-const registerSchema = object({
-  address: string().required(requiredMessage),
-  city: string().required(requiredMessage),
-  firstName: string().required(requiredMessage),
-  lastName: string().required(requiredMessage),
-  phoneNumber: number()
-    .required(requiredMessage)
-    .typeError('Please enter a valid number'),
-  zipCode: number()
-    .required(requiredMessage)
-    .typeError('Please enter a valid zip code'),
-})
-
-function CheckoutForm() {
+function CheckoutForm({ cartId }: Props) {
   const { isOpen, onToggle } = useDisclosure()
   const {
     register,
@@ -46,6 +37,17 @@ function CheckoutForm() {
   } = useForm<CheckoutSchema>({
     resolver: yupResolver(registerSchema),
   })
+
+  const [checkoutMutation, { loading, data, error }] = useCheckoutMutation()
+
+  useEffect(() => {
+    if (loading) {
+      console.log('loading')
+    }
+    if (data) {
+      console.log(data)
+    }
+  }, [data, loading])
 
   const submitForm = (form: CheckoutSchema) => {
     console.log(form)

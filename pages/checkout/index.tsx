@@ -13,7 +13,7 @@ function Checkout() {
 
   useEffect(() => {
     if (loading) {
-      console.log('loading  ')
+      console.log('loading')
     }
     if (data) {
       console.log(data)
@@ -57,7 +57,7 @@ function Checkout() {
         flexDir="column"
       >
         <Heading>Order Details:</Heading>
-        <CheckoutForm />
+        <CheckoutForm cartId={cartId} />
         <Button onClick={handleSubmit}>Submit</Button>
       </Flex>
     </Flex>

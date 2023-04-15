@@ -63,19 +63,31 @@ describe('FormField component', () => {
   describe('number input', () => {
     beforeEach(() => {
       render(
-        <FormField
-          input="phoneNumber"
-          error={{
-            errorMsg: undefined,
-            hasError: false,
-          }}
-          labelText="phone"
-          register={formRegister}
-        />
+        <>
+          <FormField
+            input="phoneNumber"
+            error={{
+              errorMsg: undefined,
+              hasError: false,
+            }}
+            labelText="phone"
+            register={formRegister}
+          />
+          <FormField
+            input="zipCode"
+            error={{
+              errorMsg: undefined,
+              hasError: false,
+            }}
+            labelText="zipCode"
+            register={formRegister}
+          />
+        </>
       )
     })
-    test('renders', () => {
+    test('renders number inputs with type=number attribute', () => {
       expect(screen.getByLabelText('phone')).toHaveAttribute('type', 'number')
+      expect(screen.getByLabelText('zipCode')).toHaveAttribute('type', 'number')
     })
   })
 })
