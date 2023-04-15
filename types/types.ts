@@ -29,7 +29,7 @@ export interface CartItem extends ShopItem {
 
 export interface CartContextType {
   cart: CartItem[] | null;
-  id: string | null;
+  cartId: string | null;
   handleAddToCart: (item: ShopItem) => void;
   handleRemoveFromCart: (item: CartItem) => void;
   total: () => number;

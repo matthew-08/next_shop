@@ -17,7 +17,7 @@ import {
 import { useForm } from 'react-hook-form'
 import { object, string, ref } from 'yup'
 import { useContext, useEffect } from 'react'
-import { AuthContext } from '@/components/context/AccountContext'
+import { AuthContext } from '@/components/_Context/AccountContext'
 import { useRegisterMutation } from 'graphql/generated/graphql'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RegisterScehma } from '@/types/types'

@@ -1,8 +1,8 @@
 import { Container, Flex, Image, VStack, Text, Button } from '@chakra-ui/react'
 import { useContext, useEffect, memo } from 'react'
 import { ShopItem, useFetchShopItemsQuery } from 'graphql/generated/graphql'
-import { UserCartContext } from './context/CartContext'
-import { AuthContext } from './context/AccountContext'
+import { UserCartContext } from './_Context/CartContext'
+import { AuthContext } from './_Context/AccountContext'
 
 const MemoProductCard = memo(({ productInfo }: { productInfo: ShopItem }) => {
   const { user } = useContext(AuthContext)

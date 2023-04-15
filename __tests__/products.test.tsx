@@ -4,7 +4,7 @@ import mockRouter from 'next-router-mock'
 import { MockedProvider } from '@apollo/client/testing'
 import Navbar from '@/components/Navbar'
 import userEvent from '@testing-library/user-event'
-import CartContext, { UserCartContext } from '@/components/context/CartContext'
+import CartContext, { UserCartContext } from '@/components/_Context/CartContext'
 import Products from '@/pages/products'
 import { FetchShopItemsDocument, ShopItem } from 'graphql/generated/graphql'
 

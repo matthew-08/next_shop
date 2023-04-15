@@ -8,8 +8,8 @@ import {
   DrawerFooter,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { AuthContext } from '@/components/context/AccountContext'
-import { UserCartContext } from '@/components/context/CartContext'
+import { AuthContext } from '@/components/_Context/AccountContext'
+import { UserCartContext } from '@/components/_Context/CartContext'
 import SidebarContent from './SidebarContent'
 import SidebarButtonGroup from './SidebarButtonGroup'
 

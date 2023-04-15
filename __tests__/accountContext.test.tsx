@@ -1,4 +1,4 @@
-import { AuthContext } from '@/components/context/AccountContext'
+import { AuthContext } from '@/components/_Context/AccountContext'
 import { MockedProvider } from '@apollo/client/testing'
 import { screen, render } from '@testing-library/react'
 import { GraphQLError } from 'graphql'
@@ -18,7 +18,7 @@ const errorMock = [
   },
 ]
 
-describe('account context', () => {
+describe('account conteerrors: [new GraphQLError("Error!")]xt', () => {
   it('should run a fetch on load', async () => {
     const user = {
       email: null,

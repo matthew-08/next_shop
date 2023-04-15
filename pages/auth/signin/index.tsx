@@ -17,7 +17,7 @@ import { useForm, FormState } from 'react-hook-form'
 import { useLogInMutation } from 'graphql/generated/graphql'
 import Link from 'next/link'
 import { useContext, useEffect } from 'react'
-import { AuthContext } from '@/components/context/AccountContext'
+import { AuthContext } from '@/components/_Context/AccountContext'
 
 interface Form {
   email: string

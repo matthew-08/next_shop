@@ -18,7 +18,7 @@ import { AuthContext } from './AccountContext'
 
 export const UserCartContext = createContext<CartContextType>({
   cart: null,
-  id: null,
+  cartId: null,
   handleAddToCart: () => null,
   handleRemoveFromCart: () => null,
   total: () => 0,
@@ -33,6 +33,9 @@ function CartContext({ children }: { children: ReactNode }) {
   const [deleteFromCart] = useDeleteFromCartMutation()
   const [incrementItem] = useIncrementItemMutation()
 
+  useEffect(() => {
+    console.log(cartId)
+  }, [cartId])
   useEffect(() => {
     if (
       accountFetchData &&
@@ -56,8 +59,6 @@ function CartContext({ children }: { children: ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountFetchData])
   const handleAddToCart = async (item: ShopItem) => {
-    console.log(user)
-    console.log('testing user')
     const itemExists = cart.find((i) => i.itemId === item.itemId)
     if (itemExists) {
       setCart(
@@ -78,7 +79,6 @@ function CartContext({ children }: { children: ReactNode }) {
             },
           },
         })
-        console.log(`sent to ${user.id}`)
       }
     } else {
       setCart([
@@ -142,7 +142,14 @@ function CartContext({ children }: { children: ReactNode }) {
 
   return (
     <UserCartContext.Provider
-      value={{ cart, handleAddToCart, handleRemoveFromCart, total, setCart }}
+      value={{
+        cart,
+        handleAddToCart,
+        handleRemoveFromCart,
+        total,
+        setCart,
+        cartId,
+      }}
     >
       {children}
     </UserCartContext.Provider>

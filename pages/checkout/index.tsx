@@ -1,14 +1,14 @@
 import { Flex, Heading, VStack, Text, Button } from '@chakra-ui/react'
 import { useContext, useEffect } from 'react'
 import { v4 as uuid } from 'uuid'
-import { UserCartContext } from '@/components/context/CartContext'
+import { UserCartContext } from '@/components/_Context/CartContext'
 import CartProduct from '@/components/CartProduct'
 import CheckoutForm from '@/components/Checkout/CheckoutForm'
 import TotalSection from '@/components/Checkout/TotalSection'
 import { useCheckoutMutation } from 'graphql/generated/graphql'
 
 function Checkout() {
-  const { cart, total, id: cartId } = useContext(UserCartContext)
+  const { cart, total, cartId } = useContext(UserCartContext)
   const [checkoutMutation, { loading, data, error }] = useCheckoutMutation()
 
   useEffect(() => {
@@ -21,6 +21,7 @@ function Checkout() {
   }, [data, loading])
 
   const handleSubmit = () => {
+    console.log(cartId)
     if (cartId) {
       checkoutMutation({
         variables: {

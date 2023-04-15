@@ -1,6 +1,6 @@
 /* eslint-disable testing-library/no-render-in-setup */
 /* eslint-disable no-plusplus */
-import { UserCartContext } from '@/components/context/CartContext'
+import { UserCartContext } from '@/components/_Context/CartContext'
 import { screen, render } from '@testing-library/react'
 import Navbar from '@/components/Navbar'
 import userEvent from '@testing-library/user-event'

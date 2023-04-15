@@ -2,7 +2,7 @@ import { getByText, render, screen, GetByText } from '@testing-library/react'
 import Sidebar from '@/components/Sidebar/Sidebar'
 import AccountContext, {
   AuthContext,
-} from '@/components/context/AccountContext'
+} from '@/components/_Context/AccountContext'
 import mockRouter from 'next-router-mock'
 import { MockedProvider } from '@apollo/client/testing'
 import Navbar from '@/components/Navbar'
