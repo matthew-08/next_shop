@@ -17,8 +17,8 @@ function CheckoutForm() {
   const { register } = useForm<CheckoutSchema>()
 
   return (
-    <Flex as="form" flexDir="column" width="100%" px="2rem" gap="1rem">
-      <Heading>Delivery Information</Heading>
+    <Flex as="form" flexDir="column" width="100%" px="2rem" gap="2rem">
+      <Heading mb="3rem">Delivery Information:</Heading>
       <HStack>
         <FormField
           input="firstName"
@@ -39,7 +39,6 @@ function CheckoutForm() {
           register={register}
         />
       </HStack>
-      <Heading>Payment Information</Heading>
     </Flex>
   )
 }
