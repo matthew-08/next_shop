@@ -7,10 +7,14 @@ interface Props {
   labelText: string
   register: (d: keyof CheckoutSchema) => object
   input: keyof CheckoutSchema
+  error: {
+    hasError: boolean
+    errorMsg: string | undefined
+  }
 }
-function FormField({ labelText, register, input }: Props) {
+function FormField({ labelText, register, input, error }: Props) {
   return (
-    <FormControl>
+    <FormControl isInvalid={error.hasError}>
       <FormLabel fontSize="1.5rem" fontWeight="medium">
         {labelText}
       </FormLabel>
