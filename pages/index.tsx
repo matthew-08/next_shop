@@ -21,6 +21,7 @@ import { RegisterDocument } from 'graphql/generated/graphql'
 import Footer from '@/components/Footer'
 import shop from 'public/shop-main.jpg'
 import MobileCarousel from '@/components/Homepage/MobileCarousel'
+import { ChatIcon } from '@chakra-ui/icons'
 import { poppins } from './_app'
 
 function Homepage() {
@@ -28,7 +29,7 @@ function Homepage() {
   const carouselImages = Object.values(CARO_IMAGES)
   const [isSmallerThan1200] = useMediaQuery('(max-width: 1200px)')
   return (
-    <Flex flexDir="column" overflow="hidden" position="relative" height="80vh">
+    <Flex flexDir="column" overflow="hidden" position="relative" height="100vh">
       {isSmallerThan1200 ? (
         <MobileCarousel />
       ) : (

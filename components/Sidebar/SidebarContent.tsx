@@ -10,7 +10,7 @@ function SidebarContent() {
   const { cart } = useContext(UserCartContext)
   return (
     <VStack height="100%">
-      <Heading mt="3rem" mb="1rem">
+      <Heading mt="3rem" mb="1rem" fontSize="3rem">
         Shopping Cart
       </Heading>
       <VStack
@@ -22,7 +22,9 @@ function SidebarContent() {
         {cart?.length ? (
           cart.map((item) => <CartProduct key={uuid()} cartItem={item} />)
         ) : (
-          <Text mt="1rem">Your cart is empty.</Text>
+          <Text mt="1rem" fontSize="2rem">
+            Your cart is empty.
+          </Text>
         )}
       </VStack>
     </VStack>

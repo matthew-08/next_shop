@@ -6,6 +6,7 @@ import './shopitem';
 import './category';
 import './auth';
 import './cart';
+import './checkout'
 
 const schema = builder.toSchema({});
 

@@ -8,6 +8,7 @@ import {
   useDisclosure,
   Circle,
   chakra,
+  Flex,
 } from '@chakra-ui/react'
 import React, { useContext, useRef } from 'react'
 import { v4 as uuid } from 'uuid'
@@ -39,11 +40,12 @@ function Navbar() {
   const btnRef = useRef(null)
   const { cart } = useContext(UserCartContext)
   return (
-    <HStack
+    <Flex
       as="nav"
       background="blackAlpha.900"
       width="100%"
       minH="200px"
+      alignItems="center"
       px={{ md: '2rem', lg: '2rem', xl: '10rem', '2xl': '15rem' }}
       py={isSmallerThan1200 ? '1rem' : '0rem'}
       color="cyan.100"
@@ -60,9 +62,14 @@ function Navbar() {
       >
         UnrealStore
       </Heading>
-      <HStack flexDir={isSmallerThan700 ? 'column' : 'row'}>
+      <Flex
+        flexDir={isSmallerThan700 ? 'column' : 'row'}
+        align="center"
+        justify="center"
+      >
         <HStack
           as={List}
+          mt="1rem"
           color="white"
           fontSize={isSmallerThan700 ? '1.5rem' : '2rem'}
           spacing="2rem"
@@ -112,9 +119,9 @@ function Navbar() {
             cursor="pointer"
           />
         </Button>
-      </HStack>
+      </Flex>
       <Sidebar isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
-    </HStack>
+    </Flex>
   )
 }
 
