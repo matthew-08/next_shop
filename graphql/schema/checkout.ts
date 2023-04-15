@@ -7,10 +7,14 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
     apiVersion: '2022-11-15',
 })
 
+
 const LineItem = (shopItem: ShopItem):Stripe.Checkout.SessionCreateParams.LineItem => {
     const {name, quantity, description, img, price} = shopItem
     return {
         quantity,
+        adjustable_quantity: {
+            enabled: false,
+        },
         price_data: {
             currency: 'USD',
             tax_behavior: 'inclusive',

@@ -8,17 +8,21 @@ import {
   useDisclosure,
   Heading,
 } from '@chakra-ui/react'
+import { useForm } from 'react-hook-form'
 
 function CheckoutForm() {
   const { isOpen, onToggle } = useDisclosure()
+  const { register } = useForm()
 
   return (
     <Flex as="form" flexDir="column" width="100%" px="2rem" gap="1rem">
       <Heading>Delivery Information</Heading>
       <HStack>
         <FormControl>
-          <FormLabel>First Name</FormLabel>
-          <Input type="text" />
+          <FormLabel fontSize="1.5rem" fontWeight="medium">
+            First Name
+          </FormLabel>
+          <Input type="text" py="1.5rem" fontSize="1.2rem" />
         </FormControl>
         <FormControl>
           <FormLabel>Last Name</FormLabel>

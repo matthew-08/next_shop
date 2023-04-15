@@ -35,3 +35,12 @@ export interface CartContextType {
   total: () => number;
   setCart: (item: ShopItem) => void;
 }
+
+export interface CheckoutSchema {
+  firstName: string;
+  lastName: string;
+  address: string;
+  city: string;
+  zipCode: string;
+  phoneNumber: number;
+}
