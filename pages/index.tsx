@@ -1,4 +1,12 @@
-import { Button, Flex, Heading, Image, Text, VStack } from '@chakra-ui/react'
+import {
+  Button,
+  Flex,
+  Heading,
+  Image,
+  Text,
+  useMediaQuery,
+  VStack,
+} from '@chakra-ui/react'
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { v4 as uuid } from 'uuid'
@@ -11,13 +19,15 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import { RegisterDocument } from 'graphql/generated/graphql'
 import Footer from '@/components/Footer'
+import shop from 'public/shop-main.jpg'
 import { poppins } from './_app'
 
 function Homepage() {
   const router = useRouter()
   const carouselImages = Object.values(CARO_IMAGES)
+  const [isSmallerThan1200] = useMediaQuery('(max-width: 1200px)')
   return (
-    <Flex flexDir="column" overflow="hidden" position="relative" height="100%">
+    <Flex flexDir="column" overflow="hidden" position="relative" height="80vh">
       <Flex justify="center" mt="4rem">
         <Flex mr="5rem" textAlign="left" flexDir="column">
           <Text fontSize="1.9rem" color="gray.800" mb="2rem">

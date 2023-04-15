@@ -11,10 +11,8 @@ function Layout({ children }: { children: ReactNode }) {
       <CartContext>
         <AccountContext>
           <CartContext>
-            <Flex flexDir="column" height="100vh">
-              <Navbar />
-              {children}
-            </Flex>
+            <Navbar />
+            {children}
           </CartContext>
         </AccountContext>
       </CartContext>

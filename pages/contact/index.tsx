@@ -1,5 +1,11 @@
 import Icon from '@/components/Contact/Icon'
-import { Flex, Heading, theme } from '@chakra-ui/react'
+import {
+  Flex,
+  Heading,
+  SimpleGrid,
+  theme,
+  useMediaQuery,
+} from '@chakra-ui/react'
 import React from 'react'
 import {
   AiFillFacebook,
@@ -10,6 +16,7 @@ import {
 import wave from 'public/wave.svg'
 import Image from 'next/image'
 import ImageComponent from '@/components/ImageComponent'
+import Footer from '@/components/Footer'
 import { poppins } from '../_app'
 
 const icons = [
@@ -32,28 +39,51 @@ const icons = [
 ]
 
 console.log(<AiFillLinkedin size="150px" />)
-function index() {
+function Index() {
+  const [isSmallerThan900] = useMediaQuery('(max-width: 900px)')
+  const [isSmallerThan600] = useMediaQuery('(max-width: 600px)')
+
+  const getHeight = () => {
+    if (isSmallerThan600) {
+      return '80vh'
+    }
+    if (isSmallerThan900) {
+      return '70vh'
+    }
+
+    return '100vh'
+  }
   return (
-    <Flex width="100%" minH="80vh" position="relative" flexDir="column">
-      <Flex margin="auto" gap="80px" maxW="1000px" flexWrap="wrap">
+    <Flex width="100%" height={getHeight()} flexDir="column">
+      <SimpleGrid
+        width="100%"
+        m="auto"
+        mx="auto"
+        columns={isSmallerThan600 ? 2 : 4}
+        alignContent="center"
+        justifyItems="center"
+        maxW={isSmallerThan900 ? '100%' : '60%'}
+      >
         {icons.map((icon) => (
           <Icon href={icon.href} MediaIcon={icon.icon} />
         ))}
-      </Flex>
-      <Heading m="auto" textAlign="center" fontSize="3rem">
+      </SimpleGrid>
+      <Heading textAlign="center" fontSize="3rem">
         123 Not Fake Address
         <br />
         Colombus, Ohio
       </Heading>
       <ImageComponent
+        alt="wave"
         width="100%"
         src={wave}
         zIndex="-1"
-        position="absolute"
-        bottom="0"
+        position="fixed"
+        bottom={0}
       />
+      <Footer />
     </Flex>
   )
 }
 
-export default index
+export default Index
