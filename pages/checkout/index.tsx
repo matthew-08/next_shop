@@ -9,27 +9,7 @@ import { useCheckoutMutation } from 'graphql/generated/graphql'
 
 function Checkout() {
   const { cart, total, cartId } = useContext(UserCartContext)
-  const [checkoutMutation, { loading, data, error }] = useCheckoutMutation()
 
-  useEffect(() => {
-    if (loading) {
-      console.log('loading')
-    }
-    if (data) {
-      console.log(data)
-    }
-  }, [data, loading])
-
-  const handleSubmit = () => {
-    console.log(cartId)
-    if (cartId) {
-      checkoutMutation({
-        variables: {
-          cartId,
-        },
-      })
-    }
-  }
   return (
     <Flex minW="100%" px="4rem" py="1rem" overflowX="hidden" minH="80%">
       <Flex
@@ -58,7 +38,6 @@ function Checkout() {
       >
         <Heading>Order Details:</Heading>
         <CheckoutForm cartId={cartId} />
-        <Button onClick={handleSubmit}>Submit</Button>
       </Flex>
     </Flex>
   )

@@ -1,26 +1,11 @@
 import React, { useEffect } from 'react'
-import {
-  Flex,
-  FormControl,
-  FormLabel,
-  Input,
-  HStack,
-  useDisclosure,
-  Heading,
-  Button,
-} from '@chakra-ui/react'
+import { Flex, HStack, Heading, Button } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 import { CheckoutSchema } from '@/types/types'
-import {
-  AnyObjectSchema,
-  object,
-  string,
-  ObjectSchema,
-  TypeFromShape,
-  number,
-} from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useCheckoutMutation } from 'graphql/generated/graphql'
+import { BsStripe } from 'react-icons/bs'
+import { useRouter } from 'next/router'
 import FormField from './FormField'
 import registerSchema from './validationSchema/validationSchema'
 
@@ -29,7 +14,6 @@ interface Props {
 }
 
 function CheckoutForm({ cartId }: Props) {
-  const { isOpen, onToggle } = useDisclosure()
   const {
     register,
     handleSubmit,
@@ -37,7 +21,7 @@ function CheckoutForm({ cartId }: Props) {
   } = useForm<CheckoutSchema>({
     resolver: yupResolver(registerSchema),
   })
-
+  const router = useRouter()
   const [checkoutMutation, { loading, data, error }] = useCheckoutMutation()
 
   useEffect(() => {
@@ -45,12 +29,25 @@ function CheckoutForm({ cartId }: Props) {
       console.log('loading')
     }
     if (data) {
-      console.log(data)
+      console.log(data.checkout)
+      window.location.replace(data.checkout)
     }
   }, [data, loading])
 
+  useEffect(() => {
+    if (!cartId) {
+      router.push('/')
+    }
+  }, [cartId])
+
   const submitForm = (form: CheckoutSchema) => {
-    console.log(form)
+    if (cartId) {
+      checkoutMutation({
+        variables: {
+          cartId,
+        },
+      })
+    }
   }
   const fieldHasError = (field: keyof CheckoutSchema) => field in errors
   return (
@@ -58,11 +55,10 @@ function CheckoutForm({ cartId }: Props) {
       as="form"
       flexDir="column"
       width="100%"
-      px="2rem"
       gap="2rem"
       onSubmit={handleSubmit(submitForm)}
     >
-      <Heading mb="3rem">Delivery Information:</Heading>
+      <Heading mb="1rem">Delivery Information:</Heading>
       <HStack>
         <FormField
           error={{
@@ -123,7 +119,23 @@ function CheckoutForm({ cartId }: Props) {
           register={register}
         />
       </HStack>
-      <Button type="submit">SUBMIT</Button>
+      <Button
+        isLoading={loading}
+        fontSize="2.3rem"
+        type="submit"
+        width="50%"
+        m="auto"
+        mt="2rem"
+        backgroundColor="whatsapp.300"
+        _hover={{
+          backgroundColor: 'whatsapp.400',
+        }}
+        padding="2rem"
+        py="2.4rem"
+        leftIcon={<BsStripe width="70px" />}
+      >
+        Pay with Stripe
+      </Button>
     </Flex>
   )
 }
