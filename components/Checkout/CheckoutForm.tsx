@@ -9,45 +9,35 @@ import {
   Heading,
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
+import { CheckoutSchema } from '@/types/types'
+import FormField from './FormField'
 
 function CheckoutForm() {
   const { isOpen, onToggle } = useDisclosure()
-  const { register } = useForm()
+  const { register } = useForm<CheckoutSchema>()
 
   return (
     <Flex as="form" flexDir="column" width="100%" px="2rem" gap="1rem">
       <Heading>Delivery Information</Heading>
       <HStack>
-        <FormControl>
-          <FormLabel fontSize="1.5rem" fontWeight="medium">
-            First Name
-          </FormLabel>
-          <Input type="text" py="1.5rem" fontSize="1.2rem" />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Last Name</FormLabel>
-          <Input type="text" />
-        </FormControl>
+        <FormField
+          input="firstName"
+          labelText="First Name"
+          register={register}
+        />
+        <FormField input="lastName" labelText="Last Name" register={register} />
       </HStack>
       <HStack>
-        <FormControl>
-          <FormLabel>Address</FormLabel>
-          <Input type="Text" />
-        </FormControl>
-        <FormControl>
-          <FormLabel>City</FormLabel>
-          <Input type="Text" />
-        </FormControl>
+        <FormField input="address" labelText="Address" register={register} />
+        <FormField input="city" labelText="City" register={register} />
       </HStack>
       <HStack>
-        <FormControl>
-          <FormLabel>Zip Code</FormLabel>
-          <Input type="Text" />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Phone Number</FormLabel>
-          <Input type="Text" />
-        </FormControl>
+        <FormField input="zipCode" labelText="Zip Code" register={register} />
+        <FormField
+          input="phoneNumber"
+          labelText="Phone Number"
+          register={register}
+        />
       </HStack>
       <Heading>Payment Information</Heading>
     </Flex>
