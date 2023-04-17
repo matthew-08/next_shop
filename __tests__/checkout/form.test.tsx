@@ -13,7 +13,7 @@ import {
   CheckoutMutationFn,
   CheckoutMutationVariables,
 } from 'graphql/generated/graphql'
-import { act } from 'react-dom/test-utils'
+import { act, scryRenderedComponentsWithType } from 'react-dom/test-utils'
 
 type FieldAndValues = {
   field: string
@@ -41,7 +41,7 @@ describe('checkout form', () => {
       CheckoutMutationVariables
     >(
       CheckoutDocument,
-      { checkout: 'link.com' },
+      { checkout: 'stripe.com/checkout' },
       {
         cartId: '123',
       }
@@ -55,6 +55,14 @@ describe('checkout form', () => {
     })
     test.only('Test without map', async () => {
       const submitButton = screen.getByText(/pay/i)
+      const assignMock = jest.fn()
+      const replaceMock = jest.fn()
+
+      delete window.location
+      window.location = {
+        assign: assignMock as any,
+        replace: replaceMock as any,
+      } as Location
       const fieldAndValues: FieldAndValues[] = [
         {
           field: 'Last Name',
@@ -87,6 +95,9 @@ describe('checkout form', () => {
         await userEvent.type(screen.getByLabelText(field), value)
       }
       await userEvent.click(submitButton)
+      await waitFor(() =>
+        expect(replaceMock).toHaveBeenCalledWith('stripe.com/checkout')
+      )
     })
   })
 })
