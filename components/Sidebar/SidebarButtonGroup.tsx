@@ -37,6 +37,7 @@ function SidebarButtonGroup({ onClose, user, cart }: Props) {
         colorScheme="green"
         width="100%"
         onClick={() => {
+          console.log('going')
           router.push('/checkout')
           onClose()
         }}

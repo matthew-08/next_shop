@@ -36,6 +36,7 @@ function CheckoutForm({ cartId }: Props) {
 
   useEffect(() => {
     if (!cartId) {
+      console.log('no cart id')
       router.push('/')
     }
   }, [cartId])

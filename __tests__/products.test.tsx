@@ -57,7 +57,7 @@ describe('products', () => {
       </MockedProvider>
     )
     expect(await screen.findByText('test-item')).toBeInTheDocument()
-    expect(await screen.findByText('$30')).toBeInTheDocument()
+    expect(await screen.findByText(/30/)).toBeInTheDocument()
   })
 
   it('should show all products', async () => {

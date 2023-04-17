@@ -53,17 +53,15 @@ describe('checkout form', () => {
         </MockedProvider>
       )
     })
-    test.only('Test without map', async () => {
+    test('Test without map', async () => {
       const submitButton = screen.getByText(/pay/i)
-      const assignMock = jest.fn()
       const replaceMock = jest.fn()
 
-      delete window.location
-      window.location = {
-        assign: assignMock as any,
-        replace: replaceMock as any,
-      } as Location
-      const fieldAndValues: FieldAndValues[] = [
+      Object.defineProperty(window, 'location', {
+        value: { replace: replaceMock },
+      })
+
+      const inputAndValues: FieldAndValues[] = [
         {
           field: 'Last Name',
           value: 'person',
@@ -90,7 +88,7 @@ describe('checkout form', () => {
         },
       ]
       // eslint-disable-next-line no-restricted-syntax
-      for (const { field, value } of fieldAndValues) {
+      for (const { field, value } of inputAndValues) {
         // eslint-disable-next-line no-await-in-loop
         await userEvent.type(screen.getByLabelText(field), value)
       }

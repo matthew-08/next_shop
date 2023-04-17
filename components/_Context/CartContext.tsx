@@ -43,7 +43,6 @@ function CartContext({ children }: { children: ReactNode }) {
         'MutationCheckForSessionSuccess'
     ) {
       const existingCart = accountFetchData.checkForSession.data.cart.userItems
-      console.log(existingCart)
       const cleanCart = existingCart.map((item) => {
         const { cartItemQuantity } = item
         // eslint-disable-next-line no-param-reassign
@@ -58,6 +57,12 @@ function CartContext({ children }: { children: ReactNode }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountFetchData])
+
+  useEffect(() => {
+    if (data?.addToCart.id) {
+      setCartId(data.addToCart.id)
+    }
+  }, [data])
   const handleAddToCart = async (item: ShopItem) => {
     const itemExists = cart.find((i) => i.itemId === item.itemId)
     if (itemExists) {

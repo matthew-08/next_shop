@@ -24,7 +24,7 @@ describe('navbar', () => {
       asPath: '/',
     })
     userEvent.click(screen.getByText('Products'))
-    mockRouter.push('/p roducts')
+    mockRouter.push('/products')
     expect(mockRouter).toMatchObject({
       asPath: '/products',
     })

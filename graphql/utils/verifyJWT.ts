@@ -7,7 +7,6 @@ interface JWTAuthPayload extends JwtPayload {
 
 const verifyJWT = async (JWT: string) => {
   try {
-    console.log(JWTSecretKey);
     const verifyUser = await jwt.verify(JWT, JWTSecretKey);
     if (typeof verifyUser === 'object') {
       return verifyUser as JWTAuthPayload;

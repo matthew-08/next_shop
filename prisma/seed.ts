@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -312,4 +312,27 @@ const updatePrice = async () => {
   });
   console.log('finished updating price column');
 };
-updatePrice();
+
+
+
+const updatePrices = async () => {
+  await prisma.shopItem.update({
+    where: {
+      id: 254
+    },
+    data: {
+      price: 15
+    }
+  })
+  
+  await prisma.shopItem.update({
+    where: {
+      id: 255
+    },
+    data: {
+      price: 25
+    }
+  })
+} 
+
+updatePrices()

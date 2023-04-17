@@ -10,6 +10,11 @@ import { useCheckoutMutation } from 'graphql/generated/graphql'
 function Checkout() {
   const { cart, total, cartId } = useContext(UserCartContext)
 
+  useEffect(() => {
+    console.log(cart)
+    console.log(total)
+  }, [])
+
   return (
     <Flex minW="100%" px="4rem" py="1rem" overflowX="hidden" minH="80%">
       <Flex
