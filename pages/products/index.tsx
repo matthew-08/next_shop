@@ -1,8 +1,7 @@
 import { SimpleGrid, Flex, useMediaQuery, Text } from '@chakra-ui/react'
 import { v4 as uuid } from 'uuid'
 import { Audio } from 'react-loader-spinner'
-import { memo, useMemo } from 'react'
-import { ShopItem, useFetchShopItemsQuery } from 'graphql/generated/graphql'
+import { useFetchShopItemsQuery } from 'graphql/generated/graphql'
 import MemoProductCard from 'components/ProductCard'
 
 function Products() {

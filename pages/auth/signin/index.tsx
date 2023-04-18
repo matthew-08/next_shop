@@ -13,7 +13,7 @@ import {
   Button,
   FormErrorMessage,
 } from '@chakra-ui/react'
-import { useForm, FormState } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useLogInMutation } from 'graphql/generated/graphql'
 import Link from 'next/link'
 import { useContext, useEffect } from 'react'
@@ -37,7 +37,7 @@ function SignIn() {
     },
   })
   const [mutateFunction, { data, loading, error }] = useLogInMutation()
-  const { user, setUser } = useContext(AuthContext)
+  const { setUser } = useContext(AuthContext)
 
   const onSubmit = async (formData: Form) => {
     localStorage.setItem('token', '123')

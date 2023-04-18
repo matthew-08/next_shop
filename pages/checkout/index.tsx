@@ -12,7 +12,6 @@ function Checkout() {
   const router = useRouter()
   useEffect(() => {
     if (!cart.cartId) {
-      console.log('no cart id')
       router.push('/')
     }
   }, [cart.cartId])

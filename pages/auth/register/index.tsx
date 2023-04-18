@@ -42,12 +42,11 @@ function Register() {
     handleSubmit,
     register,
     formState: { errors, isDirty },
-    setError,
   } = useForm<RegisterScehma>({
     resolver: yupResolver(registerSchema),
   })
   const router = useRouter()
-  const { user, setUser } = useContext(AuthContext)
+  const { setUser } = useContext(AuthContext)
   const { cart, setCart } = useContext(UserCartContext)
   const [registerMutation, { data, loading, error }] = useRegisterMutation()
   const onSubmit = (formData: RegisterScehma) => {

@@ -14,10 +14,8 @@ import {
   AiFillTwitterCircle,
 } from 'react-icons/ai'
 import wave from 'public/wave.svg'
-import Image from 'next/image'
 import ImageComponent from '@/components/ImageComponent'
 import Footer from '@/components/Footer'
-import { poppins } from '../_app'
 
 const icons = [
   {
@@ -38,7 +36,6 @@ const icons = [
   },
 ]
 
-console.log(<AiFillLinkedin size="150px" />)
 function Index() {
   const [isSmallerThan900] = useMediaQuery('(max-width: 900px)')
   const [isSmallerThan600] = useMediaQuery('(max-width: 600px)')

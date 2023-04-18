@@ -25,9 +25,6 @@ function CheckoutForm({ cartId }: Props) {
   const [checkoutMutation, { loading, data, error }] = useCheckoutMutation()
 
   useEffect(() => {
-    if (loading) {
-      console.log('loading')
-    }
     if (data) {
       window.location.replace(data.checkout)
     }
