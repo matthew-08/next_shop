@@ -48,7 +48,7 @@ function Register() {
   })
   const router = useRouter()
   const { user, setUser } = useContext(AuthContext)
-  const { cart } = useContext(UserCartContext)
+  const { cart, setCart } = useContext(UserCartContext)
   const [registerMutation, { data, loading, error }] = useRegisterMutation()
   const onSubmit = (formData: RegisterScehma) => {
     registerMutation({
@@ -57,7 +57,7 @@ function Register() {
           email: formData.email,
           password: formData.password,
         },
-        existingCartItemsId: cart?.map((cartItem) => cartItem.itemId),
+        existingCartItemsId: cart.cartItems?.map((cartItem) => cartItem.itemId),
       },
     })
   }
@@ -70,7 +70,10 @@ function Register() {
           email: data.register.data.email,
           id: data.register.data.id,
         })
-        console.log(data)
+        setCart({
+          ...cart,
+          cartId: data.register.data.cart.id,
+        })
         localStorage.setItem('token', token)
         router.push('/products')
       }

@@ -19,8 +19,10 @@ function SidebarContent() {
         divider={<StackDivider borderColor="gray.200" />}
         spacing={4}
       >
-        {cart?.length ? (
-          cart.map((item) => <CartProduct key={uuid()} cartItem={item} />)
+        {cart?.cartItems.length ? (
+          cart.cartItems.map((item) => (
+            <CartProduct key={uuid()} cartItem={item} />
+          ))
         ) : (
           <Text mt="1rem" fontSize="2rem">
             Your cart is empty.

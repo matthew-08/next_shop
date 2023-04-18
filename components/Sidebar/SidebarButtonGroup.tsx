@@ -1,13 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { ReactNode } from 'react'
 import { Flex, Text, Button } from '@chakra-ui/react'
-import { CartItem, User } from '@/types/types'
+import { CartItem, CartState, User } from '@/types/types'
 import { useRouter } from 'next/router'
 
 interface Props {
   onClose: () => void
   user: User | null
-  cart: CartItem[] | null
+  cart: CartState
 }
 
 function SidebarButtonGroup({ onClose, user, cart }: Props) {
@@ -31,13 +31,12 @@ function SidebarButtonGroup({ onClose, user, cart }: Props) {
   } else {
     mainButton = (
       <Button
-        isDisabled={cart?.length === 0}
+        isDisabled={cart?.cartItems.length === 0}
         fontSize="1.5rem"
         padding="1.5rem"
         colorScheme="green"
         width="100%"
         onClick={() => {
-          console.log('going')
           router.push('/checkout')
           onClose()
         }}

@@ -13,22 +13,20 @@ import {
   useDeleteFromCartMutation,
   useIncrementItemMutation,
 } from 'graphql/generated/graphql'
-import { CartItem, CartContextType } from '../../types/types'
+import { CartItem, CartContextType, CartState } from '../../types/types'
 import { AuthContext } from './AccountContext'
 
 export const UserCartContext = createContext<CartContextType>({
-  cart: null,
+  cart: {
+    cartId: null,
+    cartItems: [],
+  },
   cartId: null,
   handleAddToCart: () => null,
   handleRemoveFromCart: () => null,
   total: () => 0,
   setCart: () => null,
 })
-
-interface CartState {
-  cartItems: CartItem[]
-  cartId: string | null
-}
 
 function CartContext({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartState>({
@@ -116,28 +114,30 @@ function CartContext({ children }: { children: ReactNode }) {
               userId: user.id,
             },
           },
-        }).then((r) => {
-          if (data) {
-            setCartId(data.addToCart.id)
-          }
         })
       }
     }
   }
   const handleRemoveFromCart = (cartItem: CartItem) => {
-    const itemToDelete = cart.find((item) => item.itemId === cartItem.itemId)
+    const itemToDelete = cart.cartItems.find(
+      (item) => item.itemId === cartItem.itemId
+    )
     if (itemToDelete?.itemQuantity === 1) {
-      setCart(cart.filter((c) => c.itemId !== cartItem.itemId))
+      setCart({
+        ...cart,
+        cartItems: cart.cartItems.filter((c) => c.itemId !== cartItem.itemId),
+      })
     } else {
-      setCart(
-        cart.map((c) => {
+      setCart({
+        ...cart,
+        cartItems: cart.cartItems.map((c) => {
           if (c.itemId === cartItem.itemId) {
             const updatedQuantity = c.itemQuantity - 1
             return { ...c, itemQuantity: updatedQuantity }
           }
           return c
-        })
-      )
+        }),
+      })
     }
     if (user?.id && cart) {
       deleteFromCart({
@@ -149,10 +149,10 @@ function CartContext({ children }: { children: ReactNode }) {
     }
   }
   const total = useCallback(() => {
-    if (cart.length === 0) {
+    if (cart.cartItems.length === 0) {
       return 0
     }
-    const t = cart.reduce((acc, item) => {
+    const t = cart.cartItems.reduce((acc, item) => {
       // eslint-disable-next-line no-param-reassign
       acc += item.itemPrice * item.itemQuantity
       return acc

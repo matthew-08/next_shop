@@ -106,7 +106,7 @@ function Navbar() {
               size="30px"
               backgroundColor="red.400"
             >
-              {cart?.length}
+              {cart?.cartItems.length}
             </Circle>
           )}
           <ImageComponent

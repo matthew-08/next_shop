@@ -5,14 +5,17 @@ import { UserCartContext } from '@/components/_Context/CartContext'
 import CartProduct from '@/components/CartProduct'
 import CheckoutForm from '@/components/Checkout/CheckoutForm'
 import TotalSection from '@/components/Checkout/TotalSection'
+import { useRouter } from 'next/router'
 
 function Checkout() {
   const { cart, total, cartId } = useContext(UserCartContext)
-
+  const router = useRouter()
   useEffect(() => {
-    console.log(cart)
-    console.log(total)
-  }, [])
+    if (!cart.cartId) {
+      console.log('no cart id')
+      router.push('/')
+    }
+  }, [cartId])
 
   return (
     <Flex minW="100%" px="4rem" py="1rem" overflowX="hidden" minH="80%">
@@ -26,7 +29,7 @@ function Checkout() {
       >
         <Heading fontSize="3rem">Cart:</Heading>
         <VStack overflow="auto" maxHeight="500px" minH="500px">
-          {cart?.map((item) => (
+          {cart?.cartItems.map((item) => (
             <CartProduct cartItem={item} key={uuid()} />
           ))}
         </VStack>

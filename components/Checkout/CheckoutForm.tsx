@@ -29,17 +29,9 @@ function CheckoutForm({ cartId }: Props) {
       console.log('loading')
     }
     if (data) {
-      console.log(data.checkout)
       window.location.replace(data.checkout)
     }
   }, [data, loading])
-
-  useEffect(() => {
-    if (!cartId) {
-      console.log('no cart id')
-      router.push('/')
-    }
-  }, [cartId])
 
   const submitForm = (form: CheckoutSchema) => {
     if (cartId) {
