@@ -36,6 +36,7 @@ const navbarLinks = [
 function Navbar() {
   const [isSmallerThan1200] = useMediaQuery('(max-width: 1200px)')
   const [isSmallerThan700] = useMediaQuery('(max-width: 700px)')
+  const [isSmallerThan1500] = useMediaQuery('(max-width: 1500px)')
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = useRef(null)
   const { cart } = useContext(UserCartContext)
@@ -46,7 +47,7 @@ function Navbar() {
       width="100%"
       minH="200px"
       alignItems="center"
-      px={{ md: '2rem', lg: '2rem', xl: '10rem', '2xl': '15rem' }}
+      px={isSmallerThan1500 ? '5rem' : '15rem'}
       py={isSmallerThan1200 ? '1rem' : '0rem'}
       color="cyan.100"
       align="center"
@@ -62,19 +63,16 @@ function Navbar() {
       >
         UnrealStore
       </Heading>
-      <Flex
-        flexDir={isSmallerThan700 ? 'column' : 'row'}
-        align="center"
-        justify="center"
-      >
+      <Flex flexDir={isSmallerThan700 ? 'column' : 'row'} align="center">
         <HStack
           as={List}
           mt="1rem"
           color="white"
           fontSize={isSmallerThan700 ? '1.5rem' : '2rem'}
           spacing="2rem"
-          mr={isSmallerThan700 ? '1.5rem' : '5rem'}
+          mr="1rem"
           mb={isSmallerThan700 ? '1.2rem' : '0.5rem'}
+          ml="auto"
         >
           {navbarLinks.map((link) => (
             <ListItem

@@ -1,7 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import { useFetchSessionMutation } from 'graphql/generated/graphql'
-import getToken from 'utils/getToken'
 import useFetchSession from 'utils/hooks/FetchSession'
 import { User, AuthContextType } from '../../types/types'
 

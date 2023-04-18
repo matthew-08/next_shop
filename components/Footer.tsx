@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Text, useMediaQuery } from '@chakra-ui/react'
+import { Flex, Text, useMediaQuery } from '@chakra-ui/react'
 import React from 'react'
 import { AiFillGithub } from 'react-icons/ai'
 

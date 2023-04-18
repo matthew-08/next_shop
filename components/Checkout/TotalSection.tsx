@@ -1,4 +1,4 @@
-import { Flex, Text } from '@chakra-ui/react'
+import { Flex, Text, useMediaQuery } from '@chakra-ui/react'
 
 interface Props {
   total: number
@@ -7,6 +7,8 @@ interface Props {
 function TotalSection({ total }: Props) {
   const tax = (total * (7 / 100)).toFixed(2)
   const finalTotal = total + Number(tax)
+  const [isSmallerThan600] = useMediaQuery('(max-width:600px)')
+
   return (
     <Flex
       mt="auto"
@@ -14,6 +16,7 @@ function TotalSection({ total }: Props) {
       flexDir="column"
       align="center"
       width="50%"
+      minWidth={isSmallerThan600 ? '300px' : '375px'}
     >
       <Flex
         width="100%"

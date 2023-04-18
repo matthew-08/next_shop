@@ -53,8 +53,8 @@ function Index() {
   return (
     <Flex width="100%" height={getHeight()} flexDir="column">
       <SimpleGrid
-        width="100%"
         m="auto"
+        spacing="3rem"
         mx="auto"
         columns={isSmallerThan600 ? 2 : 4}
         alignContent="center"

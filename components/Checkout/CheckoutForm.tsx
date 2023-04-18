@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Flex, HStack, Heading, Button } from '@chakra-ui/react'
+import { Flex, HStack, Heading, Button, useMediaQuery } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 import { CheckoutSchema } from '@/types/types'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -23,6 +23,7 @@ function CheckoutForm({ cartId }: Props) {
   })
   const router = useRouter()
   const [checkoutMutation, { loading, data, error }] = useCheckoutMutation()
+  const [isSmallerThan600] = useMediaQuery('(max-width:600px)')
 
   useEffect(() => {
     if (data) {
@@ -49,7 +50,7 @@ function CheckoutForm({ cartId }: Props) {
       onSubmit={handleSubmit(submitForm)}
     >
       <Heading mb="1rem">Delivery Information:</Heading>
-      <HStack>
+      <Flex flexDir={isSmallerThan600 ? 'column' : 'row'}>
         <FormField
           error={{
             hasError: fieldHasError('firstName'),
@@ -68,8 +69,8 @@ function CheckoutForm({ cartId }: Props) {
           labelText="Last Name"
           register={register}
         />
-      </HStack>
-      <HStack>
+      </Flex>
+      <Flex flexDir={isSmallerThan600 ? 'column' : 'row'}>
         <FormField
           error={{
             hasError: fieldHasError('address'),
@@ -88,8 +89,8 @@ function CheckoutForm({ cartId }: Props) {
           labelText="City"
           register={register}
         />
-      </HStack>
-      <HStack>
+      </Flex>
+      <Flex flexDir={isSmallerThan600 ? 'column' : 'row'}>
         <FormField
           error={{
             hasError: fieldHasError('zipCode'),
@@ -108,7 +109,7 @@ function CheckoutForm({ cartId }: Props) {
           labelText="Phone Number"
           register={register}
         />
-      </HStack>
+      </Flex>
       <Button
         isLoading={loading}
         fontSize="2.3rem"
@@ -116,6 +117,7 @@ function CheckoutForm({ cartId }: Props) {
         width="50%"
         m="auto"
         mt="2rem"
+        minW="390px"
         backgroundColor="whatsapp.300"
         _hover={{
           backgroundColor: 'whatsapp.400',

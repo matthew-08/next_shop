@@ -1,14 +1,5 @@
 import { AddIcon, MinusIcon } from '@chakra-ui/icons'
-import {
-  HStack,
-  Image,
-  VStack,
-  Flex,
-  Text,
-  IconButton,
-  Container,
-  Box,
-} from '@chakra-ui/react'
+import { HStack, Image, VStack, Flex, Text, IconButton } from '@chakra-ui/react'
 import React, { useContext } from 'react'
 import { UserCartContext } from '@/components/_Context/CartContext'
 import { CartItem } from 'types/types'

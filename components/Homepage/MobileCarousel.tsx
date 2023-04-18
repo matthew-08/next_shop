@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Button, Text, Heading, useMediaQuery } from '@chakra-ui/react'
+import { Flex, Button, Heading, useMediaQuery } from '@chakra-ui/react'
 import CARO_IMAGES from 'utils/carouselImages'
 import { SwiperSlide, Swiper } from 'swiper/react'
 import { Navigation } from 'swiper'

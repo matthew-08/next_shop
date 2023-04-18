@@ -10,7 +10,8 @@ import useFetchSession from 'utils/hooks/FetchSession'
 
 function Checkout() {
   const { cart, total } = useContext(UserCartContext)
-  const [isSmallerThan1200] = useMediaQuery('(max-width:1200px)')
+  const [isSmallerThan1000] = useMediaQuery('(max-width:1000px)')
+  const [isSmallerThan1400] = useMediaQuery('(max-width:1400px)')
   const router = useRouter()
   const [sessionFetched, fetchedUser] = useFetchSession()
 
@@ -18,23 +19,23 @@ function Checkout() {
     if (sessionFetched && !fetchedUser) {
       router.push('/')
     }
-  }, [sessionFetched, fetchedUser])
+  }, [sessionFetched, fetchedUser, router])
 
   return (
     <Flex
       minW="100%"
-      px="4rem"
+      px={isSmallerThan1400 ? '0.5rem' : '4rem'}
       py="1rem"
       minH="100%"
       overflowX="hidden"
       flexGrow="1"
-      flexDir={isSmallerThan1200 ? 'column' : 'row'}
+      flexDir={isSmallerThan1000 ? 'column' : 'row'}
     >
       <Flex
-        minW="30%"
         align="center"
         flexDir="column"
-        borderRight="1px solid"
+        borderRight={isSmallerThan1000 ? '' : '2px solid  '}
+        borderBottom={isSmallerThan1000 ? '2px solid' : ''}
         borderColor="grey.600"
         padding="1rem"
       >

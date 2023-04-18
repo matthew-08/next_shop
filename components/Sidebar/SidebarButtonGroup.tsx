@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { ReactNode } from 'react'
-import { Flex, Text, Button } from '@chakra-ui/react'
-import { CartItem, CartState, User } from '@/types/types'
+import { Flex, Text, Button, useMediaQuery } from '@chakra-ui/react'
+import { CartState, User } from '@/types/types'
 import { useRouter } from 'next/router'
 
 interface Props {
@@ -12,6 +12,7 @@ interface Props {
 
 function SidebarButtonGroup({ onClose, user, cart }: Props) {
   const router = useRouter()
+  const [isSmallerThan500] = useMediaQuery('(max-width: 500px)')
   let mainButton: ReactNode
   if (!user?.email) {
     mainButton = (
@@ -46,7 +47,12 @@ function SidebarButtonGroup({ onClose, user, cart }: Props) {
     )
   }
   return (
-    <Flex m="auto" flexDir="column" width="60%" gap="0.5rem">
+    <Flex
+      m="auto"
+      flexDir="column"
+      width={isSmallerThan500 ? '80%' : '70%'}
+      gap="0.5rem"
+    >
       {!user ||
         (!user.id && (
           <Text textAlign="center">
