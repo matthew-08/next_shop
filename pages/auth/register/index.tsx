@@ -57,6 +57,7 @@ function Register() {
           email: formData.email,
           password: formData.password,
         },
+        existingCartItemsId: cart?.map((cartItem) => cartItem.itemId),
       },
     })
   }
@@ -69,7 +70,7 @@ function Register() {
           email: data.register.data.email,
           id: data.register.data.id,
         })
-
+        console.log(data)
         localStorage.setItem('token', token)
         router.push('/products')
       }

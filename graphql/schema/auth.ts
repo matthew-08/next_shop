@@ -41,7 +41,7 @@ builder.mutationFields((t) => ({
     },
     args: {
       input: t.arg({ type: UserRegisterInput, required: true }),
-      existingCartItemsId: t.arg({ type: ['String'] }),
+      existingCartItemsId: t.arg({ type: ['String'], required: false }),
     },
     resolve: async (root, args) => {
       const userExists = await prisma.user.count({

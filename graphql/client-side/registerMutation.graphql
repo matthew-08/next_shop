@@ -1,6 +1,6 @@
 mutation Register(
   $UserRegisterInput: UserRegisterInput!
-  $existingCartItemsId: [String]
+  $existingCartItemsId: [String!]
 ) {
   register(
     input: $UserRegisterInput
