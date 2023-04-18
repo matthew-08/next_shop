@@ -37,7 +37,6 @@ type HandleRemoveFromCart = (item: CartItem) => void
 
 export interface CartContextType {
   cart: CartState
-  cartId: string | null
   handleModifyCart: (
     type: 'increment' | 'decrement',
     item: ShopItem | CartItem

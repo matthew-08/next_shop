@@ -5,7 +5,6 @@ import {
   Image,
   Text,
   useMediaQuery,
-  VStack,
 } from '@chakra-ui/react'
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -17,11 +16,8 @@ import ImageComponent from '@/components/ImageComponent'
 import wave from 'public/wave.svg'
 import 'swiper/css'
 import 'swiper/css/navigation'
-import { RegisterDocument } from 'graphql/generated/graphql'
 import Footer from '@/components/Footer'
-import shop from 'public/shop-main.jpg'
 import MobileCarousel from '@/components/Homepage/MobileCarousel'
-import { ChatIcon } from '@chakra-ui/icons'
 import { poppins } from './_app'
 
 function Homepage() {

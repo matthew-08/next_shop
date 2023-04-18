@@ -5,7 +5,6 @@ import { UserCartContext } from './_Context/CartContext'
 import { AuthContext } from './_Context/AccountContext'
 
 const MemoProductCard = memo(({ productInfo }: { productInfo: ShopItem }) => {
-  const { user } = useContext(AuthContext)
   const { handleModifyCart } = useContext(UserCartContext)
 
   return (

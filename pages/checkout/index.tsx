@@ -8,14 +8,14 @@ import TotalSection from '@/components/Checkout/TotalSection'
 import { useRouter } from 'next/router'
 
 function Checkout() {
-  const { cart, total, cartId } = useContext(UserCartContext)
+  const { cart, total } = useContext(UserCartContext)
   const router = useRouter()
   useEffect(() => {
     if (!cart.cartId) {
       console.log('no cart id')
       router.push('/')
     }
-  }, [cartId])
+  }, [cart.cartId])
 
   return (
     <Flex minW="100%" px="4rem" py="1rem" overflowX="hidden" minH="80%">
@@ -44,7 +44,7 @@ function Checkout() {
         flexDir="column"
       >
         <Heading>Order Details:</Heading>
-        <CheckoutForm cartId={cartId} />
+        <CheckoutForm cartId={cart.cartId} />
       </Flex>
     </Flex>
   )

@@ -22,8 +22,7 @@ export const UserCartContext = createContext<CartContextType>({
     cartItems: [],
   },
   cartId: null,
-  handleAddToCart: () => null,
-  handleRemoveFromCart: () => null,
+  handleModifyCart: () => () => null,
   total: () => 0,
   setCart: () => null,
 })
@@ -33,15 +32,11 @@ function CartContext({ children }: { children: ReactNode }) {
     cartItems: [],
     cartId: null,
   })
-  const [cartId, setCartId] = useState('')
   const { user, accountFetchData } = useContext(AuthContext)
   const [addToCart, { loading, data, error }] = useAddToCartMutation()
   const [deleteFromCart] = useDeleteFromCartMutation()
   const [incrementItem] = useIncrementItemMutation()
 
-  useEffect(() => {
-    console.log(cartId)
-  }, [cartId])
   useEffect(() => {
     if (
       accountFetchData &&
@@ -58,7 +53,6 @@ function CartContext({ children }: { children: ReactNode }) {
         nestedItem.itemQuantity = cartItemQuantity
         return nestedItem
       })
-      setCartId(accountFetchData.checkForSession.data.cart.id)
       setCart({
         cartId: accountFetchData.checkForSession.data.cart.id,
         cartItems: cleanCart,
@@ -67,11 +61,6 @@ function CartContext({ children }: { children: ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountFetchData])
 
-  useEffect(() => {
-    if (data?.addToCart.id) {
-      setCartId(data.addToCart.id)
-    }
-  }, [data])
   const handleAddToCart = async (item: ShopItem) => {
     const itemExists = cart.cartItems.find((i) => i.itemId === item.itemId)
     if (itemExists) {
@@ -85,11 +74,11 @@ function CartContext({ children }: { children: ReactNode }) {
           return i
         }),
       })
-      if (user && user.id) {
+      if (user?.id && cart.cartId) {
         incrementItem({
           variables: {
             input: {
-              cartId,
+              cartId: cart.cartId,
               itemId: item.itemId,
             },
           },
@@ -139,10 +128,10 @@ function CartContext({ children }: { children: ReactNode }) {
         }),
       })
     }
-    if (user?.id && cart.cartItems) {
+    if (user?.id && cart.cartId) {
       deleteFromCart({
         variables: {
-          cartId,
+          cartId: cart.cartId,
           itemId: cartItem.itemId,
         },
       })
@@ -178,7 +167,6 @@ function CartContext({ children }: { children: ReactNode }) {
         handleModifyCart,
         total,
         setCart,
-        cartId,
       }}
     >
       {children}

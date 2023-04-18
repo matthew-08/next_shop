@@ -1,10 +1,10 @@
 const getToken = () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token')
   if (token) {
-    return token;
+    return token
   }
 
-  return null;
-};
+  return null
+}
 
-export default getToken;
+export default getToken
