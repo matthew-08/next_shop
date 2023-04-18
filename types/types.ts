@@ -32,11 +32,16 @@ export interface CartState {
   cartId: string | null
 }
 
+type HandleAddToCart = (item: ShopItem) => void
+type HandleRemoveFromCart = (item: CartItem) => void
+
 export interface CartContextType {
   cart: CartState
   cartId: string | null
-  handleAddToCart: (item: ShopItem) => void
-  handleRemoveFromCart: (item: CartItem) => void
+  handleModifyCart: (
+    type: 'increment' | 'decrement',
+    item: ShopItem | CartItem
+  ) => HandleRemoveFromCart | HandleAddToCart
   total: () => number
   setCart: (cart: CartState) => void
 }

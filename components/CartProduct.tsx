@@ -14,15 +14,7 @@ import { UserCartContext } from '@/components/_Context/CartContext'
 import { CartItem } from 'types/types'
 
 function CartProduct({ cartItem }: { cartItem: CartItem }) {
-  const { cart, handleRemoveFromCart, handleAddToCart } =
-    useContext(UserCartContext)
-  const handleClick = (symbol: '-' | '+') => {
-    if (symbol === '-') {
-      handleRemoveFromCart(cartItem)
-    } else {
-      handleAddToCart(cartItem)
-    }
-  }
+  const { cart, handleModifyCart } = useContext(UserCartContext)
   return (
     <HStack maxH="200px" width="100%" align="center">
       <Image
@@ -43,7 +35,7 @@ function CartProduct({ cartItem }: { cartItem: CartItem }) {
           <IconButton
             aria-label="button"
             data-testid="decrement-button"
-            onClick={() => handleClick('-')}
+            onClick={() => handleModifyCart('decrement', cartItem)}
             icon={<MinusIcon boxSize={4} />}
           />
           <Flex flexGrow={1} px="2rem">
@@ -53,7 +45,7 @@ function CartProduct({ cartItem }: { cartItem: CartItem }) {
           </Flex>
           <IconButton
             aria-label="button"
-            onClick={() => handleClick('+')}
+            onClick={() => handleModifyCart('increment', cartItem)}
             icon={<AddIcon boxSize={4} />}
             data-testid="increment-button"
           />

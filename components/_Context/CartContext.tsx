@@ -139,7 +139,7 @@ function CartContext({ children }: { children: ReactNode }) {
         }),
       })
     }
-    if (user?.id && cart) {
+    if (user?.id && cart.cartItems) {
       deleteFromCart({
         variables: {
           cartId,
@@ -147,6 +147,17 @@ function CartContext({ children }: { children: ReactNode }) {
         },
       })
     }
+  }
+
+  const handleModifyCart = (
+    type: 'increment' | 'decrement',
+    item: ShopItem
+  ) => {
+    if (type === 'increment') {
+      return handleAddToCart(item)
+    }
+
+    return handleRemoveFromCart(item)
   }
   const total = useCallback(() => {
     if (cart.cartItems.length === 0) {
@@ -164,8 +175,7 @@ function CartContext({ children }: { children: ReactNode }) {
     <UserCartContext.Provider
       value={{
         cart,
-        handleAddToCart,
-        handleRemoveFromCart,
+        handleModifyCart,
         total,
         setCart,
         cartId,

@@ -6,7 +6,7 @@ import { AuthContext } from './_Context/AccountContext'
 
 const MemoProductCard = memo(({ productInfo }: { productInfo: ShopItem }) => {
   const { user } = useContext(AuthContext)
-  const { handleAddToCart } = useContext(UserCartContext)
+  const { handleModifyCart } = useContext(UserCartContext)
 
   return (
     <Flex
@@ -42,7 +42,7 @@ const MemoProductCard = memo(({ productInfo }: { productInfo: ShopItem }) => {
             padding="1.5rem"
             py="2rem"
             color="white"
-            onClick={() => handleAddToCart(productInfo)}
+            onClick={() => handleModifyCart('increment', productInfo)}
             _hover={{
               backgroundColor: 'blackAlpha.700',
             }}

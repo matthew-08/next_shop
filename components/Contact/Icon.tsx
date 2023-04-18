@@ -1,13 +1,5 @@
 import { IconButton, useMediaQuery } from '@chakra-ui/react'
-import { ReactJSXElement } from '@emotion/react/types/jsx-namespace'
-import React, { ReactElement, ReactNode } from 'react'
 import { IconType } from 'react-icons/lib'
-import {
-  AiFillFacebook,
-  AiFillInstagram,
-  AiFillLinkedin,
-  AiFillTwitterCircle,
-} from 'react-icons/ai'
 
 interface Props {
   href: string
