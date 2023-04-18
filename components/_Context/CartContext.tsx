@@ -160,6 +160,8 @@ function CartContext({ children }: { children: ReactNode }) {
     return t
   }, [cart])
 
+  const getCart = () => cart
+
   return (
     <UserCartContext.Provider
       value={{
@@ -167,6 +169,7 @@ function CartContext({ children }: { children: ReactNode }) {
         handleModifyCart,
         total,
         setCart,
+        getCart,
       }}
     >
       {children}

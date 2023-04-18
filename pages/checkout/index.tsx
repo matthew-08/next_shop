@@ -1,4 +1,11 @@
-import { Flex, Heading, VStack, Text, Button } from '@chakra-ui/react'
+import {
+  Flex,
+  Heading,
+  VStack,
+  Text,
+  Button,
+  useMediaQuery,
+} from '@chakra-ui/react'
 import { useContext, useEffect } from 'react'
 import { v4 as uuid } from 'uuid'
 import { UserCartContext } from '@/components/_Context/CartContext'
@@ -6,18 +13,34 @@ import CartProduct from '@/components/CartProduct'
 import CheckoutForm from '@/components/Checkout/CheckoutForm'
 import TotalSection from '@/components/Checkout/TotalSection'
 import { useRouter } from 'next/router'
+import { AuthContext } from '@/components/_Context/AccountContext'
+import { gql } from '@apollo/client'
+import client from 'apollo-client'
+import useFetchSession from 'utils/hooks/FetchSession'
 
 function Checkout() {
-  const { cart, total } = useContext(UserCartContext)
+  const { cart, total, getCart } = useContext(UserCartContext)
+  const { accountFetchData, sessionFetchLoading } = useContext(AuthContext)
+  const [isSmallerThan1200] = useMediaQuery('(max-width:1200px)')
   const router = useRouter()
+  const [sessionFetched, fetchedUser] = useFetchSession()
+
   useEffect(() => {
-    if (!cart.cartId) {
+    if (sessionFetched && !fetchedUser) {
       router.push('/')
     }
-  }, [cart.cartId])
+  }, [sessionFetched, fetchedUser])
 
   return (
-    <Flex minW="100%" px="4rem" py="1rem" overflowX="hidden" minH="80%">
+    <Flex
+      minW="100%"
+      px="4rem"
+      py="1rem"
+      minH="100%"
+      overflowX="hidden"
+      flexGrow="1"
+      flexDir={isSmallerThan1200 ? 'column' : 'row'}
+    >
       <Flex
         minW="30%"
         align="center"
@@ -26,8 +49,7 @@ function Checkout() {
         borderColor="grey.600"
         padding="1rem"
       >
-        <Heading fontSize="3rem">Cart:</Heading>
-        <VStack overflow="auto" maxHeight="500px" minH="500px">
+        <VStack overflow="auto" maxHeight="500px" minH="500px" padding="0.5rem">
           {cart?.cartItems.map((item) => (
             <CartProduct cartItem={item} key={uuid()} />
           ))}
@@ -42,7 +64,6 @@ function Checkout() {
         align="center"
         flexDir="column"
       >
-        <Heading>Order Details:</Heading>
         <CheckoutForm cartId={cart.cartId} />
       </Flex>
     </Flex>

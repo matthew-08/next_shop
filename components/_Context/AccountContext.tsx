@@ -2,12 +2,14 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { useFetchSessionMutation } from 'graphql/generated/graphql'
 import getToken from 'utils/getToken'
+import useFetchSession from 'utils/hooks/FetchSession'
 import { User, AuthContextType } from '../../types/types'
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   setUser: () => null,
   accountFetchData: null,
+  sessionFetchLoading: false,
 })
 
 function AccountContext({ children }: { children: ReactNode }) {
@@ -15,23 +17,16 @@ function AccountContext({ children }: { children: ReactNode }) {
     id: null,
     email: null,
   })
-  const [mutateFunction, { data: accountFetchData, loading, error }] =
-    useFetchSessionMutation()
+  const [fetchedSession, fetchedUser] = useFetchSession()
+  const [
+    mutateFunction,
+    { data: accountFetchData, loading: sessionFetchLoading, error },
+  ] = useFetchSessionMutation()
   useEffect(() => {
-    const checkForUser = async () => {
-      const token = getToken()
-      if (token) {
-        await mutateFunction({
-          variables: {
-            input: {
-              token,
-            },
-          },
-        })
-      }
+    if (fetchedSession && fetchedUser) {
+      setUser(fetchedUser)
     }
-    checkForUser()
-  }, [])
+  }, [fetchedSession, fetchedUser])
   useEffect(() => {
     if (accountFetchData) {
       if (
@@ -47,7 +42,9 @@ function AccountContext({ children }: { children: ReactNode }) {
     }
   }, [accountFetchData])
   return (
-    <AuthContext.Provider value={{ user, setUser, accountFetchData }}>
+    <AuthContext.Provider
+      value={{ user, setUser, accountFetchData, sessionFetchLoading }}
+    >
       {children}
     </AuthContext.Provider>
   )

@@ -20,6 +20,7 @@ export interface AuthContextType {
   user: null | User
   setUser: Dispatch<SetStateAction<User>>
   accountFetchData: FetchSessionMutation | null | undefined
+  sessionFetchLoading: boolean
 }
 
 // CART
@@ -43,6 +44,7 @@ export interface CartContextType {
   ) => HandleRemoveFromCart | HandleAddToCart
   total: () => number
   setCart: (cart: CartState) => void
+  getCart: () => CartState
 }
 
 export interface CheckoutSchema {

@@ -13,6 +13,10 @@ body {
 html, body, #__next, #app {
   min-height: 100vh;
 }
+#__next {
+  display: flex;
+  flex-direction: column;
+}
 
 main {
   padding: 5rem 0;

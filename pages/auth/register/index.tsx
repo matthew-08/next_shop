@@ -40,6 +40,7 @@ const registerSchema = object({
 function Register() {
   const {
     handleSubmit,
+    setError,
     register,
     formState: { errors, isDirty },
   } = useForm<RegisterScehma>({
@@ -75,6 +76,10 @@ function Register() {
         })
         localStorage.setItem('token', token)
         router.push('/products')
+      } else if (data.register.__typename === 'Error') {
+        setError('email', {
+          message: data.register.message,
+        })
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,7 +88,8 @@ function Register() {
   return (
     <VStack
       as="form"
-      maxWidth="400px"
+      maxWidth="600px"
+      minWidth={{ sm: '300px', md: '400px' }}
       m="auto"
       mt="7rem"
       onSubmit={handleSubmit(onSubmit)}
@@ -93,7 +99,7 @@ function Register() {
         <FormLabel>Email</FormLabel>
         <InputGroup>
           <InputLeftElement pointerEvents="none" children={<EmailIcon />} />
-          <Input type="text" {...register('email')} />
+          <Input type="text" {...register('email')} width="100%" />
         </InputGroup>
         <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
       </FormControl>
