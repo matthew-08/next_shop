@@ -25,8 +25,16 @@ export const UserCartContext = createContext<CartContextType>({
   setCart: () => null,
 })
 
+interface CartState {
+  cart: CartItem[]
+  cartId: string | null
+}
+
 function CartContext({ children }: { children: ReactNode }) {
-  const [cart, setCart] = useState<CartItem[]>([])
+  const [cart, setCart] = useState<CartState>({
+    cart: [],
+    cartId: null,
+  })
   const [cartId, setCartId] = useState('')
   const { user, accountFetchData } = useContext(AuthContext)
   const [addToCart, { loading, data, error }] = useAddToCartMutation()
@@ -53,7 +61,10 @@ function CartContext({ children }: { children: ReactNode }) {
         return nestedItem
       })
       setCartId(accountFetchData.checkForSession.data.cart.id)
-      setCart(cleanCart)
+      setCart({
+        cartId: accountFetchData.checkForSession.data.cart.id,
+        cart: cleanCart,
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountFetchData])
