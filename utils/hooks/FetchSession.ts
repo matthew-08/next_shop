@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { useFetchSessionMutation } from 'graphql/generated/graphql'
 import getToken from 'utils/getToken'
 import { CartState, User } from '@/types/types'
-import { CartItem } from '@prisma/client'
 
 const useFetchSession = () => {
   const [sessionChecked, setSessionChecked] = useState<boolean>(false)

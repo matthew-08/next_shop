@@ -5,7 +5,6 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react'
-import { UseFormRegister } from 'react-hook-form'
 import { CheckoutSchema } from '@/types/types'
 
 interface Props {

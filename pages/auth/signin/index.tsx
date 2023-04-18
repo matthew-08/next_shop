@@ -18,6 +18,7 @@ import { useLogInMutation } from 'graphql/generated/graphql'
 import Link from 'next/link'
 import { useContext, useEffect } from 'react'
 import { AuthContext } from '@/components/_Context/AccountContext'
+import setToken from 'utils/setToken'
 
 interface Form {
   email: string
@@ -40,7 +41,6 @@ function SignIn() {
   const { setUser } = useContext(AuthContext)
 
   const onSubmit = async (formData: Form) => {
-    localStorage.setItem('token', '123')
     mutateFunction({
       variables: {
         LoginType: {
@@ -53,7 +53,7 @@ function SignIn() {
 
   useEffect(() => {
     if (data?.login.__typename === 'MutationLoginSuccess') {
-      localStorage.setItem('token', data.login.data.token)
+      setToken(data.login.data.token)
       const { email, id } = data.login.data
       setUser({ email, id })
     } else {

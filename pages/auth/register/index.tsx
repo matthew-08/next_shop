@@ -24,6 +24,7 @@ import { RegisterScehma } from '@/types/types'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { UserCartContext } from '@/components/_Context/CartContext'
+import setToken from 'utils/setToken'
 
 const registerSchema = object({
   email: string()
@@ -74,7 +75,7 @@ function Register() {
           ...cart,
           cartId: data.register.data.cart.id,
         })
-        localStorage.setItem('token', token)
+        setToken(token)
         router.push('/products')
       } else if (data.register.__typename === 'Error') {
         setError('email', {

@@ -23,10 +23,10 @@ import { poppins } from './_app'
 function Homepage() {
   const router = useRouter()
   const carouselImages = Object.values(CARO_IMAGES)
-  const [isSmallerThan1200] = useMediaQuery('(max-width: 1200px)')
+  const [isSmallerThan1300] = useMediaQuery('(max-width: 1300px)')
   return (
     <Flex flexDir="column" overflow="hidden" position="relative" height="100vh">
-      {isSmallerThan1200 ? (
+      {isSmallerThan1300 ? (
         <MobileCarousel />
       ) : (
         <Flex justify="center" mt="4rem">

@@ -7,7 +7,6 @@ import {
   DrawerBody,
   DrawerFooter,
 } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
 import { AuthContext } from '@/components/_Context/AccountContext'
 import { UserCartContext } from '@/components/_Context/CartContext'
 import SidebarContent from './SidebarContent'
@@ -24,7 +23,6 @@ function Sidebar({
 }) {
   const { user } = useContext(AuthContext)
   const { cart } = useContext(UserCartContext)
-  const router = useRouter()
 
   return (
     <Drawer
