@@ -26,13 +26,13 @@ export const UserCartContext = createContext<CartContextType>({
 })
 
 interface CartState {
-  cart: CartItem[]
+  cartItems: CartItem[]
   cartId: string | null
 }
 
 function CartContext({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartState>({
-    cart: [],
+    cartItems: [],
     cartId: null,
   })
   const [cartId, setCartId] = useState('')
@@ -63,7 +63,7 @@ function CartContext({ children }: { children: ReactNode }) {
       setCartId(accountFetchData.checkForSession.data.cart.id)
       setCart({
         cartId: accountFetchData.checkForSession.data.cart.id,
-        cart: cleanCart,
+        cartItems: cleanCart,
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -75,17 +75,18 @@ function CartContext({ children }: { children: ReactNode }) {
     }
   }, [data])
   const handleAddToCart = async (item: ShopItem) => {
-    const itemExists = cart.find((i) => i.itemId === item.itemId)
+    const itemExists = cart.cartItems.find((i) => i.itemId === item.itemId)
     if (itemExists) {
-      setCart(
-        cart.map((i) => {
+      setCart({
+        ...cart,
+        cartItems: cart.cartItems.map((i) => {
           if (i.itemId === item.itemId) {
             const updateQuanaity = i.itemQuantity + 1
             return { ...i, itemQuantity: updateQuanaity }
           }
           return i
-        })
-      )
+        }),
+      })
       if (user && user.id) {
         incrementItem({
           variables: {
@@ -97,13 +98,16 @@ function CartContext({ children }: { children: ReactNode }) {
         })
       }
     } else {
-      setCart([
+      setCart({
         ...cart,
-        {
-          ...item,
-          itemQuantity: 1,
-        },
-      ])
+        cartItems: [
+          ...cart.cartItems,
+          {
+            ...item,
+            itemQuantity: 1,
+          },
+        ],
+      })
       if (user && user.id) {
         await addToCart({
           variables: {
