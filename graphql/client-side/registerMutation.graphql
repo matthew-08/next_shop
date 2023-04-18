@@ -14,6 +14,19 @@ mutation Register(
       data {
         email
         id
+        cart {
+          id
+          userItems {
+            cartItemQuantity
+            item {
+              itemDescription
+              itemId
+              itemImage
+              itemName
+              itemPrice
+            }
+          }
+        }
         token
       }
     }
