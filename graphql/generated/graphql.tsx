@@ -89,6 +89,7 @@ export type MutationLoginArgs = {
 
 
 export type MutationRegisterArgs = {
+  existingCartItemsId?: InputMaybe<Array<Scalars['String']>>;
   input: UserRegisterInput;
 };
 

@@ -1,5 +1,11 @@
-mutation Register($UserRegisterInput: UserRegisterInput!) {
-  register(input: $UserRegisterInput) {
+mutation Register(
+  $UserRegisterInput: UserRegisterInput!
+  $existingCartItemsId: [String]
+) {
+  register(
+    input: $UserRegisterInput
+    existingCartItemsId: $existingCartItemsId
+  ) {
     __typename
     ... on Error {
       message

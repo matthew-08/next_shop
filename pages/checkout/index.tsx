@@ -5,7 +5,6 @@ import { UserCartContext } from '@/components/_Context/CartContext'
 import CartProduct from '@/components/CartProduct'
 import CheckoutForm from '@/components/Checkout/CheckoutForm'
 import TotalSection from '@/components/Checkout/TotalSection'
-import { useCheckoutMutation } from 'graphql/generated/graphql'
 
 function Checkout() {
   const { cart, total, cartId } = useContext(UserCartContext)
