@@ -18,33 +18,13 @@ function AccountContext({ children }: { children: ReactNode }) {
     email: null,
   })
   const [fetchedSession, fetchedUser] = useFetchSession()
-  const [
-    mutateFunction,
-    { data: accountFetchData, loading: sessionFetchLoading, error },
-  ] = useFetchSessionMutation()
   useEffect(() => {
     if (fetchedSession && fetchedUser) {
       setUser(fetchedUser)
     }
   }, [fetchedSession, fetchedUser])
-  useEffect(() => {
-    if (accountFetchData) {
-      if (
-        accountFetchData.checkForSession.__typename ===
-        'MutationCheckForSessionSuccess'
-      ) {
-        const { email, cart, token, id } = accountFetchData.checkForSession.data
-        setUser({
-          email,
-          id,
-        })
-      }
-    }
-  }, [accountFetchData])
   return (
-    <AuthContext.Provider
-      value={{ user, setUser, accountFetchData, sessionFetchLoading }}
-    >
+    <AuthContext.Provider value={{ user, setUser }}>
       {children}
     </AuthContext.Provider>
   )

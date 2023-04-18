@@ -13,6 +13,7 @@ import {
   useDeleteFromCartMutation,
   useIncrementItemMutation,
 } from 'graphql/generated/graphql'
+import useFetchSession from 'utils/hooks/FetchSession'
 import { CartItem, CartContextType, CartState } from '../../types/types'
 import { AuthContext } from './AccountContext'
 
@@ -21,7 +22,6 @@ export const UserCartContext = createContext<CartContextType>({
     cartId: null,
     cartItems: [],
   },
-  cartId: null,
   handleModifyCart: () => () => null,
   total: () => 0,
   setCart: () => null,
@@ -32,34 +32,18 @@ function CartContext({ children }: { children: ReactNode }) {
     cartItems: [],
     cartId: null,
   })
-  const { user, accountFetchData } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
+  const [fetchedSession, fetchedUser, fetchedCart] = useFetchSession()
   const [addToCart, { loading, data, error }] = useAddToCartMutation()
   const [deleteFromCart] = useDeleteFromCartMutation()
   const [incrementItem] = useIncrementItemMutation()
 
   useEffect(() => {
-    if (
-      accountFetchData &&
-      accountFetchData.checkForSession.__typename ===
-        'MutationCheckForSessionSuccess'
-    ) {
-      const existingCart = accountFetchData.checkForSession.data.cart.userItems
-      const cleanCart = existingCart.map((item) => {
-        const { cartItemQuantity } = item
-        // eslint-disable-next-line no-param-reassign
-        delete item.__typename
-        const nestedItem = item.item
-        delete nestedItem.__typename
-        nestedItem.itemQuantity = cartItemQuantity
-        return nestedItem
-      })
-      setCart({
-        cartId: accountFetchData.checkForSession.data.cart.id,
-        cartItems: cleanCart,
-      })
+    if (fetchedCart.cartId && fetchedCart.cartItems) {
+      setCart(fetchedCart)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountFetchData])
+  }, [fetchedCart])
 
   const handleAddToCart = async (item: ShopItem) => {
     const itemExists = cart.cartItems.find((i) => i.itemId === item.itemId)

@@ -1,11 +1,4 @@
-import {
-  Flex,
-  Heading,
-  VStack,
-  Text,
-  Button,
-  useMediaQuery,
-} from '@chakra-ui/react'
+import { Flex, VStack, useMediaQuery } from '@chakra-ui/react'
 import { useContext, useEffect } from 'react'
 import { v4 as uuid } from 'uuid'
 import { UserCartContext } from '@/components/_Context/CartContext'
@@ -13,14 +6,10 @@ import CartProduct from '@/components/CartProduct'
 import CheckoutForm from '@/components/Checkout/CheckoutForm'
 import TotalSection from '@/components/Checkout/TotalSection'
 import { useRouter } from 'next/router'
-import { AuthContext } from '@/components/_Context/AccountContext'
-import { gql } from '@apollo/client'
-import client from 'apollo-client'
 import useFetchSession from 'utils/hooks/FetchSession'
 
 function Checkout() {
-  const { cart, total, getCart } = useContext(UserCartContext)
-  const { accountFetchData, sessionFetchLoading } = useContext(AuthContext)
+  const { cart, total } = useContext(UserCartContext)
   const [isSmallerThan1200] = useMediaQuery('(max-width:1200px)')
   const router = useRouter()
   const [sessionFetched, fetchedUser] = useFetchSession()

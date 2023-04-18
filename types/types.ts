@@ -44,7 +44,6 @@ export interface CartContextType {
   ) => HandleRemoveFromCart | HandleAddToCart
   total: () => number
   setCart: (cart: CartState) => void
-  getCart: () => CartState
 }
 
 export interface CheckoutSchema {
