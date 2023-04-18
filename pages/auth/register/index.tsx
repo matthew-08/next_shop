@@ -23,6 +23,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { RegisterScehma } from '@/types/types'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { UserCartContext } from '@/components/_Context/CartContext'
 
 const registerSchema = object({
   email: string()
@@ -47,6 +48,7 @@ function Register() {
   })
   const router = useRouter()
   const { user, setUser } = useContext(AuthContext)
+  const { cart } = useContext(UserCartContext)
   const [registerMutation, { data, loading, error }] = useRegisterMutation()
   const onSubmit = (formData: RegisterScehma) => {
     registerMutation({
@@ -67,6 +69,7 @@ function Register() {
           email: data.register.data.email,
           id: data.register.data.id,
         })
+
         localStorage.setItem('token', token)
         router.push('/products')
       }

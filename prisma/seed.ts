@@ -335,4 +335,4 @@ const updatePrices = async () => {
   })
 } 
 
-updatePrices()
+/* updatePrices() */

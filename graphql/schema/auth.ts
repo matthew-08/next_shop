@@ -3,6 +3,7 @@ import prisma from 'prisma/db';
 import JWTSecretKey from 'graphql/utils/envVariables';
 import builder from '../builder';
 import verifyJWT from '../utils/verifyJWT';
+import { shopItem } from './shopitem';
 
 const user = builder.prismaObject('User', {
   description: 'Object type representing a user',
@@ -24,6 +25,7 @@ const user = builder.prismaObject('User', {
   }),
 });
 
+
 const UserRegisterInput = builder.inputType('UserRegisterInput', {
   fields: (t) => ({
     email: t.string({ required: true }),
@@ -39,6 +41,7 @@ builder.mutationFields((t) => ({
     },
     args: {
       input: t.arg({ type: UserRegisterInput, required: true }),
+      existingCartItemsId: t.arg({type: ['String']})
     },
     resolve: async (root, args) => {
       const userExists = await prisma.user.count({
