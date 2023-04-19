@@ -6,12 +6,17 @@ import {
   ShopItem,
 } from 'graphql/generated/graphql'
 import MemoProductCard from 'components/ProductCard'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import {
+  GetServerSideProps,
+  GetStaticProps,
+  InferGetServerSidePropsType,
+  InferGetStaticPropsType,
+} from 'next'
 import client from 'apollo-client'
 
 function Products({
   allItems,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const [isSmallerThan1000] = useMediaQuery('(max-width: 1000px)', {
     ssr: true,
     fallback: false,
@@ -40,7 +45,7 @@ function Products({
   )
 }
 
-export const getServerSideProps: GetServerSideProps<{
+export const getStaticProps: GetStaticProps<{
   allItems: ShopItem[]
 }> = async (context) => {
   const { data }: { data: FetchShopItemsQuery } = await client.query({
