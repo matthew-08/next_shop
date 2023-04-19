@@ -8,24 +8,11 @@ export const config = {
   },
 }
 
-/// e
 export default createYoga<{
   req: NextApiRequest
   res: NextApiResponse
 }>({
-  schema: createSchema({
-    typeDefs: /* GraphQL */ `
-      type Query {
-        greetings: String
-      }
-    `,
-    resolvers: {
-      Query: {
-        greetings: () =>
-          'This is the `greetings` field of the root `Query` type',
-      },
-    },
-  }),
+  schema,
   // Needed to be defined explicitly because our endpoint lives at a different path other than `/graphql`
   graphqlEndpoint: '/api/graphql',
 })
