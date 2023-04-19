@@ -8,6 +8,7 @@ import {
   useCallback,
   useEffect,
   useRef,
+  useMemo,
 } from 'react'
 import {
   ShopItem,
@@ -24,7 +25,6 @@ export const UserCartContext = createContext<CartContextType>({
     cartId: null,
     cartItems: [],
   },
-  handleModifyCart: () => undefined,
   total: () => 0,
   setCart: () => null,
 })
@@ -49,8 +49,8 @@ function CartContext({ children }: { children: ReactNode }) {
   const [incrementItem] = useIncrementItemMutation()
   const cartRef = useRef(cart)
   /* This cartRef exists due to the handler function which is wrapped in useCallback.
-      Hacky solution - but more of a "I wonder if this would work" type of thing.
- */
+     Hacky solution - but more of a "I wonder if this would work" type of thing.
+  */
   useEffect(() => {
     if (fetchedCart.cartId && fetchedCart.cartItems) {
       setCart(fetchedCart)
@@ -164,9 +164,14 @@ function CartContext({ children }: { children: ReactNode }) {
     return t
   }, [cart])
 
+  const memoizedUserCartValue = useMemo(
+    () => ({ cart, setCart, total }),
+    [cart, setCart, total]
+  )
+
   return (
     <UserModifyCartContext.Provider value={handleModifyCart}>
-      <UserCartContext.Provider value={{ cart, setCart, total }}>
+      <UserCartContext.Provider value={memoizedUserCartValue}>
         {children}
       </UserCartContext.Provider>
     </UserModifyCartContext.Provider>

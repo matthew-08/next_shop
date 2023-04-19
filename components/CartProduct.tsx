@@ -1,11 +1,15 @@
 import { AddIcon, MinusIcon } from '@chakra-ui/icons'
 import { HStack, Image, VStack, Flex, Text, IconButton } from '@chakra-ui/react'
 import React, { useContext } from 'react'
-import { UserCartContext } from '@/components/_Context/CartContext'
+import {
+  UserCartContext,
+  UserModifyCartContext,
+} from '@/components/_Context/CartContext'
 import { CartItem } from 'types/types'
 
 function CartProduct({ cartItem }: { cartItem: CartItem }) {
-  const { cart, handleModifyCart } = useContext(UserCartContext)
+  const { cart } = useContext(UserCartContext)
+  const handleModifyCart = useContext(UserModifyCartContext)
   return (
     <HStack maxH="200px" width="100%" align="center">
       <Image

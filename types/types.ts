@@ -31,15 +31,8 @@ export interface CartState {
   cartId: string | null
 }
 
-type HandleAddToCart = (item: ShopItem) => void
-type HandleRemoveFromCart = (item: CartItem) => void
-
 export interface CartContextType {
   cart: CartState
-  handleModifyCart: (
-    type: 'increment' | 'decrement',
-    item: ShopItem | CartItem
-  ) => void | Promise<void>
   total: () => number
   setCart: (cart: CartState) => void
 }
