@@ -3,7 +3,7 @@ import { setContext } from '@apollo/client/link/context'
 import getToken from 'utils/getToken'
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3000/api/graphql',
+  uri: `${process.env.URI}/api/graphql`,
 })
 
 const authLink = setContext((_, { headers }) => {
@@ -20,7 +20,7 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
   ssrMode: true,
-  uri: 'http://localhost:3000/api/graphql',
+  uri: `${process.env.URI}/graphql`,
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 })
