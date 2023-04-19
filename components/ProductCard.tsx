@@ -1,10 +1,14 @@
 import { Container, Flex, Image, VStack, Text, Button } from '@chakra-ui/react'
-import { useContext, memo } from 'react'
+import { useContext, memo, useEffect, useRef } from 'react'
 import { ShopItem, useFetchShopItemsQuery } from 'graphql/generated/graphql'
-import { UserCartContext } from './_Context/CartContext'
+import { UserCartContext, UserModifyCartContext } from './_Context/CartContext'
 
-const MemoProductCard = memo(({ productInfo }: { productInfo: ShopItem }) => {
-  const { handleModifyCart } = useContext(UserCartContext)
+function MemoProductCard({ productInfo }: { productInfo: ShopItem }) {
+  const handleModifyCart = useContext(UserModifyCartContext)
+
+  useEffect(() => {
+    console.log('product card render')
+  })
 
   return (
     <Flex
@@ -52,6 +56,6 @@ const MemoProductCard = memo(({ productInfo }: { productInfo: ShopItem }) => {
       </Flex>
     </Flex>
   )
-})
+}
 
 export default MemoProductCard

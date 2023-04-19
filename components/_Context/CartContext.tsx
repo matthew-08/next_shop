@@ -16,6 +16,7 @@ import {
   useIncrementItemMutation,
 } from 'graphql/generated/graphql'
 import useFetchSession from 'utils/hooks/FetchSession'
+import { shopItem } from 'graphql/schema/shopitem'
 import { CartItem, CartContextType, CartState } from '../../types/types'
 import { AuthContext } from './AccountContext'
 
@@ -29,6 +30,14 @@ export const UserCartContext = createContext<CartContextType>({
   setCart: () => null,
 })
 
+type ModifyCartContextType = (
+  arg: 'increment' | 'decrement',
+  item: ShopItem
+) => void | Promise<void>
+export const UserModifyCartContext = createContext<ModifyCartContextType>(
+  () => undefined
+)
+
 function CartContext({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartState>({
     cartItems: [],
@@ -41,12 +50,17 @@ function CartContext({ children }: { children: ReactNode }) {
   const [incrementItem] = useIncrementItemMutation()
 
   useEffect(() => {
+    console.log('cart context render')
+  })
+
+  useEffect(() => {
     if (fetchedCart.cartId && fetchedCart.cartItems) {
       setCart(fetchedCart)
     }
   }, [fetchedCart])
 
   const handleAddToCart = async (item: ShopItem) => {
+    console.log(cart)
     const itemExists = cart.cartItems.find((i) => i.itemId === item.itemId)
     if (itemExists) {
       setCart({
@@ -70,16 +84,16 @@ function CartContext({ children }: { children: ReactNode }) {
         })
       }
     } else {
-      setCart({
-        ...cart,
+      setCart((c) => ({
+        ...c,
         cartItems: [
-          ...cart.cartItems,
+          ...c.cartItems,
           {
             ...item,
             itemQuantity: 1,
           },
         ],
-      })
+      }))
       if (user && user.id) {
         await addToCart({
           variables: {
@@ -92,6 +106,7 @@ function CartContext({ children }: { children: ReactNode }) {
       }
     }
   }
+
   const handleRemoveFromCart = (cartItem: CartItem) => {
     const itemToDelete = cart.cartItems.find(
       (item) => item.itemId === cartItem.itemId
@@ -102,8 +117,8 @@ function CartContext({ children }: { children: ReactNode }) {
         cartItems: cart.cartItems.filter((c) => c.itemId !== cartItem.itemId),
       })
     } else {
-      setCart({
-        ...cart,
+      setCart((c) => ({
+        ...c,
         cartItems: cart.cartItems.map((c) => {
           if (c.itemId === cartItem.itemId) {
             const updatedQuantity = c.itemQuantity - 1
@@ -111,7 +126,7 @@ function CartContext({ children }: { children: ReactNode }) {
           }
           return c
         }),
-      })
+      }))
     }
     if (user?.id && cart.cartId) {
       deleteFromCart({
@@ -123,17 +138,16 @@ function CartContext({ children }: { children: ReactNode }) {
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleModifyCart = (
-    type: 'increment' | 'decrement',
-    item: ShopItem
-  ) => {
-    if (type === 'increment') {
-      return handleAddToCart(item)
-    }
+  const handleModifyCart = useCallback(
+    (type: 'increment' | 'decrement', item: ShopItem) => {
+      if (type === 'increment') {
+        return handleAddToCart(item)
+      }
+      return handleRemoveFromCart(item)
+    },
+    []
+  )
 
-    return handleRemoveFromCart(item)
-  }
   const total = useCallback(() => {
     if (cart.cartItems.length === 0) {
       return 0
@@ -145,18 +159,15 @@ function CartContext({ children }: { children: ReactNode }) {
     }, 0)
     return t
   }, [cart])
-  useEffect(() => {
-    console.log('cart context render')
-  })
 
-  const contextValue = useMemo(
-    () => ({ cart, handleModifyCart, total, setCart }),
-    [cart, total, handleModifyCart]
-  )
+  console.log(cart)
+
   return (
-    <UserCartContext.Provider value={contextValue}>
-      {children}
-    </UserCartContext.Provider>
+    <UserModifyCartContext.Provider value={handleModifyCart}>
+      <UserCartContext.Provider value={{ cart, setCart, total }}>
+        {children}
+      </UserCartContext.Provider>
+    </UserModifyCartContext.Provider>
   )
 }
 
