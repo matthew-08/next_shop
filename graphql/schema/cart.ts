@@ -1,10 +1,8 @@
-import { PrismaPlugin } from '@pothos/plugin-prisma';
-import {
-  CartItem, ShopItem, User, UserCart,
-} from '@prisma/client';
-import prisma from 'prisma/db';
-import builder from '../builder';
-import { shopItem } from './shopitem';
+import { PrismaPlugin } from '@pothos/plugin-prisma'
+import type { CartItem, ShopItem, User, UserCart } from '@prisma/client'
+import prisma from 'prisma/db'
+import builder from '../builder'
+import { shopItem } from './shopitem'
 
 const cartItem = builder.prismaObject('CartItem', {
   fields: (t) => ({
@@ -17,13 +15,13 @@ const cartItem = builder.prismaObject('CartItem', {
           where: {
             id: c.itemId,
           },
-        });
-        return item as ShopItem;
+        })
+        return item as ShopItem
       },
     }),
     t: t.exposeBoolean('processed'),
   }),
-});
+})
 
 const userCart = builder.prismaObject('UserCart', {
   fields: (t) => ({
@@ -62,7 +60,7 @@ const userCart = builder.prismaObject('UserCart', {
       },
     }), */
   }),
-});
+})
 
 builder.queryFields((t) => ({
   userCart: t.prismaField({
@@ -75,25 +73,25 @@ builder.queryFields((t) => ({
         where: {
           userId: Number(args.userId),
         },
-      });
-      return cart as UserCart;
+      })
+      return cart as UserCart
     },
   }),
-}));
+}))
 
 const AddToCartInput = builder.inputType('AddToCartInput', {
   fields: (t) => ({
     userId: t.string({ required: true }),
     itemToAdd: t.string({ required: true }),
   }),
-});
+})
 
 const IncrementCartItemInput = builder.inputType('IncrementCartItemInput', {
   fields: (t) => ({
     itemId: t.string({ required: true }),
     cartId: t.string({ required: true }),
   }),
-});
+})
 
 builder.mutationFields((t) => ({
   addToCart: t.field({
@@ -102,13 +100,13 @@ builder.mutationFields((t) => ({
     },
     type: userCart,
     resolve: async (root, args) => {
-      const { itemToAdd, userId } = args.input;
-      const currentUserId = Number(userId);
+      const { itemToAdd, userId } = args.input
+      const currentUserId = Number(userId)
       const cartExists = await prisma.userCart.count({
         where: {
           userId: currentUserId,
         },
-      });
+      })
       if (!cartExists) {
         const newCart = await prisma.userCart.create({
           data: {
@@ -126,23 +124,23 @@ builder.mutationFields((t) => ({
               },
             },
           },
-        });
-        return newCart;
+        })
+        return newCart
       }
       const uCart = await prisma.userCart.findFirst({
         where: {
           userId: currentUserId,
         },
-      });
+      })
       if (uCart) {
         await prisma.cartItem.create({
           data: {
             cartId: uCart.id,
             itemId: Number(itemToAdd),
           },
-        });
+        })
       }
-      return uCart as UserCart;
+      return uCart as UserCart
     },
   }),
   deleteFromCart: t.field({
@@ -159,13 +157,13 @@ builder.mutationFields((t) => ({
             itemId: Number(args.itemId),
           },
         },
-      });
+      })
       if (findItem?.quantity === 1) {
         await prisma.cartItem.delete({
           where: {
             id: Number(findItem.id),
           },
-        });
+        })
       } else if (findItem) {
         await prisma.cartItem.update({
           where: {
@@ -174,14 +172,14 @@ builder.mutationFields((t) => ({
           data: {
             quantity: { decrement: 1 },
           },
-        });
+        })
       }
       const updatedCart = await prisma.userCart.findUnique({
         where: {
           id: Number(args.cartId),
         },
-      });
-      return updatedCart as UserCart;
+      })
+      return updatedCart as UserCart
     },
   }),
   incrementCartItem: t.field({
@@ -197,8 +195,8 @@ builder.mutationFields((t) => ({
             cartId: Number(args.input.cartId),
           },
         },
-      });
-      console.log(shopItemToIncrement?.id);
+      })
+      console.log(shopItemToIncrement?.id)
       if (shopItemToIncrement) {
         const item = await prisma.cartItem.update({
           where: {
@@ -207,10 +205,10 @@ builder.mutationFields((t) => ({
           data: {
             quantity: { increment: 1 },
           },
-        });
-        console.log(item.id);
+        })
+        console.log(item.id)
       }
-      return shopItemToIncrement as CartItem;
+      return shopItemToIncrement as CartItem
     },
   }),
-}));
+}))

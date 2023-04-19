@@ -1,20 +1,20 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import JWTSecretKey from './envVariables';
+import jwt, { JwtPayload } from 'jsonwebtoken'
+import JWTSecretKey from './envVariables'
 
 interface JWTAuthPayload extends JwtPayload {
-  id: string,
+  id: string
 }
 
 const verifyJWT = async (JWT: string) => {
   try {
-    const verifyUser = await jwt.verify(JWT, JWTSecretKey);
+    const verifyUser = await jwt.verify(JWT, JWTSecretKey)
     if (typeof verifyUser === 'object') {
-      return verifyUser as JWTAuthPayload;
+      return verifyUser as JWTAuthPayload
     }
-    return false;
+    return false
   } catch (error) {
-    return false;
+    return false
   }
-};
+}
 
-export default verifyJWT;
+export default verifyJWT

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable no-underscore-dangle */
 import {
   createContext,
@@ -22,7 +23,7 @@ export const UserCartContext = createContext<CartContextType>({
     cartId: null,
     cartItems: [],
   },
-  handleModifyCart: () => () => null,
+  handleModifyCart: () => undefined,
   total: () => 0,
   setCart: () => null,
 })
@@ -144,16 +145,14 @@ function CartContext({ children }: { children: ReactNode }) {
     return t
   }, [cart])
 
-  const getCart = () => cart
-
   return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <UserCartContext.Provider
       value={{
         cart,
         handleModifyCart,
         total,
         setCart,
-        getCart,
       }}
     >
       {children}

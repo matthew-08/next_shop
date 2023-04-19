@@ -1,13 +1,11 @@
 /* eslint-disable no-underscore-dangle */
-import { createContext, ReactNode, useEffect, useState } from 'react'
+import { createContext, ReactNode, useEffect, useMemo, useState } from 'react'
 import useFetchSession from 'utils/hooks/FetchSession'
 import { User, AuthContextType } from '../../types/types'
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   setUser: () => null,
-  accountFetchData: null,
-  sessionFetchLoading: false,
 })
 
 function AccountContext({ children }: { children: ReactNode }) {
@@ -21,10 +19,10 @@ function AccountContext({ children }: { children: ReactNode }) {
       setUser(fetchedUser)
     }
   }, [fetchedSession, fetchedUser])
+
+  const contextValue = useMemo(() => ({ user, setUser }), [user])
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   )
 }
 

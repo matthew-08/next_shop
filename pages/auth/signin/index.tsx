@@ -11,7 +11,9 @@ import {
   ButtonGroup,
   Image,
   Button,
+  InputGroup,
   FormErrorMessage,
+  InputLeftAddon,
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 import { useLogInMutation } from 'graphql/generated/graphql'
@@ -64,6 +66,7 @@ function SignIn() {
         setError('password', { message })
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
   const fieldHasError = (type: 'password' | 'email') => type in errors
@@ -72,19 +75,20 @@ function SignIn() {
       <VStack
         as="form"
         maxWidth="400px"
+        minW="400px"
         m="auto"
         mt="7rem"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Heading>Sign-In</Heading>
+        <Heading fontSize="3rem">Sign-In</Heading>
         <FormControl isInvalid={fieldHasError('email')}>
           <FormLabel>Email</FormLabel>
-          <Input type="email" {...register('email')} />
+          <Input type="email" {...register('email')} padding="1.5 rem" />
           <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={fieldHasError('password')}>
           <FormLabel>Password</FormLabel>
-          <Input type="text" {...register('password')} />
+          <Input type="text" {...register('password')} padding="1.5 rem" />
           <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
         </FormControl>
         <Text>

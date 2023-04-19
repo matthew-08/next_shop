@@ -19,8 +19,6 @@ export interface User {
 export interface AuthContextType {
   user: null | User
   setUser: Dispatch<SetStateAction<User>>
-  accountFetchData: FetchSessionMutation | null | undefined
-  sessionFetchLoading: boolean
 }
 
 // CART
@@ -41,7 +39,7 @@ export interface CartContextType {
   handleModifyCart: (
     type: 'increment' | 'decrement',
     item: ShopItem | CartItem
-  ) => HandleRemoveFromCart | HandleAddToCart
+  ) => void | Promise<void>
   total: () => number
   setCart: (cart: CartState) => void
 }

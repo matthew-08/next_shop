@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
-import prisma from 'prisma/db';
-import builder from '../builder';
+import prisma from 'prisma/db'
+import builder from '../builder'
 
 export const shopItem = builder.prismaObject('ShopItem', {
   description: 'An object representing an individual shop item.',
@@ -12,7 +12,7 @@ export const shopItem = builder.prismaObject('ShopItem', {
     itemQuantity: t.exposeInt('quantity'),
     itemPrice: t.exposeFloat('price'),
   }),
-});
+})
 
 builder.queryFields((t) => ({
   itemById: t.prismaField({
@@ -22,12 +22,13 @@ builder.queryFields((t) => ({
     args: {
       id: t.arg.int({ required: true }),
     },
-    resolve: (query, parent, args) => prisma.shopItem.findUnique({
-      ...query,
-      where: {
-        id: args.id,
-      },
-    }),
+    resolve: (query, parent, args) =>
+      prisma.shopItem.findUnique({
+        ...query,
+        where: {
+          id: args.id,
+        },
+      }),
   }),
   allItems: t.prismaField({
     type: ['ShopItem'],
@@ -40,12 +41,13 @@ builder.queryFields((t) => ({
     args: {
       categoryId: t.arg.int({ required: true }),
     },
-    resolve: (query, parent, args) => prisma.shopItem.findMany({
-      where: {
-        category: {
-          id: args.categoryId,
+    resolve: (query, parent, args) =>
+      prisma.shopItem.findMany({
+        where: {
+          category: {
+            id: args.categoryId,
+          },
         },
-      },
-    }),
+      }),
   }),
-}));
+}))

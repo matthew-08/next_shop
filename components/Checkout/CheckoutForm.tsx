@@ -50,7 +50,7 @@ function CheckoutForm({ cartId }: Props) {
       onSubmit={handleSubmit(submitForm)}
     >
       <Heading mb="1rem">Delivery Information:</Heading>
-      <Flex flexDir={isSmallerThan600 ? 'column' : 'row'}>
+      <Flex flexDir={isSmallerThan600 ? 'column' : 'row'} gap="1rem">
         <FormField
           error={{
             hasError: fieldHasError('firstName'),
@@ -70,7 +70,7 @@ function CheckoutForm({ cartId }: Props) {
           register={register}
         />
       </Flex>
-      <Flex flexDir={isSmallerThan600 ? 'column' : 'row'}>
+      <Flex flexDir={isSmallerThan600 ? 'column' : 'row'} gap="1rem">
         <FormField
           error={{
             hasError: fieldHasError('address'),
@@ -90,7 +90,7 @@ function CheckoutForm({ cartId }: Props) {
           register={register}
         />
       </Flex>
-      <Flex flexDir={isSmallerThan600 ? 'column' : 'row'}>
+      <Flex flexDir={isSmallerThan600 ? 'column' : 'row'} gap="1rem">
         <FormField
           error={{
             hasError: fieldHasError('zipCode'),
