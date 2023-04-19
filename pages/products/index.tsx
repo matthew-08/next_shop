@@ -48,8 +48,8 @@ function Products({
 
 export const getStaticProps: GetStaticProps<{
   allItems: ShopItem[]
-}> = async (context) =>
-  /* const { data }: { data: FetchShopItemsQuery } = await client.query({
+}> = async (context) => {
+  const { data }: { data: FetchShopItemsQuery } = await client.query({
     query: gql`
       query FetchShopItems {
         allItems {
@@ -63,11 +63,12 @@ export const getStaticProps: GetStaticProps<{
       }
     `,
   })
-  const { allItems } = data */
-  ({
+  const { allItems } = data
+  return {
     props: {
-      allItems: [],
+      allItems,
     },
-  })
+  }
+}
 
 export default Products
