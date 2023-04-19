@@ -12,6 +12,7 @@ import {
   InferGetServerSidePropsType,
   InferGetStaticPropsType,
 } from 'next'
+import { gql } from '@apollo/client'
 import client from 'apollo-client'
 
 function Products({
@@ -49,7 +50,18 @@ export const getStaticProps: GetStaticProps<{
   allItems: ShopItem[]
 }> = async (context) => {
   const { data }: { data: FetchShopItemsQuery } = await client.query({
-    query: FetchShopItemsDocument,
+    query: gql`
+      query FetchShopItems {
+        allItems {
+          itemDescription
+          itemImage
+          itemName
+          itemId
+          itemQuantity
+          itemPrice
+        }
+      }
+    `,
   })
   const { allItems } = data
   return {
