@@ -7,7 +7,7 @@ import {
   useContext,
   useCallback,
   useEffect,
-  useMemo,
+  useRef,
 } from 'react'
 import {
   ShopItem,
@@ -16,7 +16,6 @@ import {
   useIncrementItemMutation,
 } from 'graphql/generated/graphql'
 import useFetchSession from 'utils/hooks/FetchSession'
-import { shopItem } from 'graphql/schema/shopitem'
 import { CartItem, CartContextType, CartState } from '../../types/types'
 import { AuthContext } from './AccountContext'
 
@@ -48,31 +47,34 @@ function CartContext({ children }: { children: ReactNode }) {
   const [addToCart, { loading, data, error }] = useAddToCartMutation()
   const [deleteFromCart] = useDeleteFromCartMutation()
   const [incrementItem] = useIncrementItemMutation()
-
-  useEffect(() => {
-    console.log('cart context render')
-  })
-
+  const cartRef = useRef(cart)
+  /* This cartRef exists due to the handler function which is wrapped in useCallback.
+      Hacky solution - but more of a "I wonder if this would work" type of thing.
+ */
   useEffect(() => {
     if (fetchedCart.cartId && fetchedCart.cartItems) {
       setCart(fetchedCart)
     }
   }, [fetchedCart])
 
+  useEffect(() => {
+    cartRef.current = cart
+  }, [cart])
   const handleAddToCart = async (item: ShopItem) => {
-    console.log(cart)
-    const itemExists = cart.cartItems.find((i) => i.itemId === item.itemId)
+    const itemExists = cartRef.current.cartItems.find(
+      (i) => i.itemId === item.itemId
+    )
     if (itemExists) {
-      setCart({
-        ...cart,
-        cartItems: cart.cartItems.map((i) => {
+      setCart((prevCart) => ({
+        ...prevCart,
+        cartItems: prevCart.cartItems.map((i) => {
           if (i.itemId === item.itemId) {
             const updateQuanaity = i.itemQuantity + 1
             return { ...i, itemQuantity: updateQuanaity }
           }
           return i
         }),
-      })
+      }))
       if (user?.id && cart.cartId) {
         incrementItem({
           variables: {
@@ -84,10 +86,10 @@ function CartContext({ children }: { children: ReactNode }) {
         })
       }
     } else {
-      setCart((c) => ({
-        ...c,
+      setCart((prevCart) => ({
+        ...prevCart,
         cartItems: [
-          ...c.cartItems,
+          ...prevCart.cartItems,
           {
             ...item,
             itemQuantity: 1,
@@ -108,18 +110,20 @@ function CartContext({ children }: { children: ReactNode }) {
   }
 
   const handleRemoveFromCart = (cartItem: CartItem) => {
-    const itemToDelete = cart.cartItems.find(
+    const itemToDelete = cartRef.current.cartItems.find(
       (item) => item.itemId === cartItem.itemId
     )
     if (itemToDelete?.itemQuantity === 1) {
-      setCart({
-        ...cart,
-        cartItems: cart.cartItems.filter((c) => c.itemId !== cartItem.itemId),
-      })
+      setCart((prevCart) => ({
+        ...prevCart,
+        cartItems: prevCart.cartItems.filter(
+          (c) => c.itemId !== cartItem.itemId
+        ),
+      }))
     } else {
-      setCart((c) => ({
-        ...c,
-        cartItems: cart.cartItems.map((c) => {
+      setCart((prevCart) => ({
+        ...prevCart,
+        cartItems: prevCart.cartItems.map((c) => {
           if (c.itemId === cartItem.itemId) {
             const updatedQuantity = c.itemQuantity - 1
             return { ...c, itemQuantity: updatedQuantity }
@@ -145,7 +149,7 @@ function CartContext({ children }: { children: ReactNode }) {
       }
       return handleRemoveFromCart(item)
     },
-    []
+    [user]
   )
 
   const total = useCallback(() => {
@@ -159,8 +163,6 @@ function CartContext({ children }: { children: ReactNode }) {
     }, 0)
     return t
   }, [cart])
-
-  console.log(cart)
 
   return (
     <UserModifyCartContext.Provider value={handleModifyCart}>
