@@ -1,5 +1,4 @@
 import { SimpleGrid, Flex, useMediaQuery, Text, Box } from '@chakra-ui/react'
-import { v4 as uuid } from 'uuid'
 import { Audio } from 'react-loader-spinner'
 import {
   FetchShopItemsDocument,
