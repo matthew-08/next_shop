@@ -7,6 +7,7 @@ import {
   useContext,
   useCallback,
   useEffect,
+  useMemo,
 } from 'react'
 import {
   ShopItem,
@@ -43,7 +44,6 @@ function CartContext({ children }: { children: ReactNode }) {
     if (fetchedCart.cartId && fetchedCart.cartItems) {
       setCart(fetchedCart)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchedCart])
 
   const handleAddToCart = async (item: ShopItem) => {
@@ -123,6 +123,7 @@ function CartContext({ children }: { children: ReactNode }) {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleModifyCart = (
     type: 'increment' | 'decrement',
     item: ShopItem
@@ -144,17 +145,16 @@ function CartContext({ children }: { children: ReactNode }) {
     }, 0)
     return t
   }, [cart])
+  useEffect(() => {
+    console.log('cart context render')
+  })
 
+  const contextValue = useMemo(
+    () => ({ cart, handleModifyCart, total, setCart }),
+    [cart, total, handleModifyCart]
+  )
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <UserCartContext.Provider
-      value={{
-        cart,
-        handleModifyCart,
-        total,
-        setCart,
-      }}
-    >
+    <UserCartContext.Provider value={contextValue}>
       {children}
     </UserCartContext.Provider>
   )
