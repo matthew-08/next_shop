@@ -24,5 +24,6 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 })
+console.log(`${process.env.NEXT_PUBLIC_D_URL}/api/graphql`)
 
 export default client
