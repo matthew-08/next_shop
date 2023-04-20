@@ -4,6 +4,7 @@ import {
   FetchShopItemsDocument,
   FetchShopItemsQuery,
   ShopItem,
+  useFetchShopItemsQuery,
 } from 'graphql/generated/graphql'
 import MemoProductCard from 'components/ProductCard'
 import {
@@ -15,22 +16,23 @@ import {
 import { gql } from '@apollo/client'
 import client from 'apollo-client'
 
-function Products({
-  allItems,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+function Products() {
+  const { loading, data, error } = useFetchShopItemsQuery()
   const [isSmallerThan1000] = useMediaQuery('(max-width: 1000px)', {
     ssr: true,
     fallback: false,
   })
   let products
-  if (!allItems) {
+  if (loading) {
     products = (
       <Flex m="auto" mt="3rem" role="status">
         <Audio height="300" width="300" color="#C4F1F9" />
       </Flex>
     )
   } else {
-    products = allItems.map((item) => <MemoProductCard productInfo={item} />)
+    products = data?.allItems.map((item) => (
+      <MemoProductCard productInfo={item} />
+    ))
   }
 
   return (
@@ -46,7 +48,7 @@ function Products({
   )
 }
 
-export const getStaticProps: GetStaticProps<{
+/* export const getStaticProps: GetStaticProps<{
   allItems: ShopItem[]
 }> = async (context) => {
   const { data }: { data: FetchShopItemsQuery } = await client.query({
@@ -69,6 +71,6 @@ export const getStaticProps: GetStaticProps<{
       allItems,
     },
   }
-}
+} */
 
 export default Products

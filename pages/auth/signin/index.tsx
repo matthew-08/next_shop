@@ -11,9 +11,7 @@ import {
   ButtonGroup,
   Image,
   Button,
-  InputGroup,
   FormErrorMessage,
-  InputLeftAddon,
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 import { useLogInMutation } from 'graphql/generated/graphql'
