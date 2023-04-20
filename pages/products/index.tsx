@@ -34,13 +34,7 @@ function Products({
   }
 
   return (
-    <SimpleGrid
-      as="main"
-      px={isSmallerThan1000 ? '1rem' : '20rem'}
-      gap="2rem"
-      minChildWidth="330px"
-      py="1rem"
-    >
+    <SimpleGrid as="main" px="1rem" gap="2rem" minChildWidth="330px" py="1rem">
       {products}
     </SimpleGrid>
   )
